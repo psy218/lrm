@@ -11,8 +11,8 @@ RMarkdown supports:
 
 ## Before the workshop
 **RMarkdown Installation**
-0.5. Install [RStudio](https://www.rstudio.com/products/rstudio/download/).
-1. In your RStudio, install RMarkdown by typing `install.packages("rmarkdown")`.
+* Install [RStudio](https://www.rstudio.com/products/rstudio/download/).
+* In your RStudio, install RMarkdown by typing `install.packages("rmarkdown")`.
 
 **Workshop Materials**
-Clone or download the materials from this [git repo](https://www.github.com/psy218/lrm) by clicking download button ![image](https://docs.buddybuild.com/repository/github/img/click-use-ssh.png) on the right corner.
+* Clone or download the materials from this [git repo](https://www.github.com/psy218/lrm) by clicking download button ![image](https://docs.buddybuild.com/repository/github/img/click-use-ssh.png)
