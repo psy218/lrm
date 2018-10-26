@@ -1,8 +1,8 @@
 # Let's RMarkdown
 
 ## Event description
-Date & Time: Tuesday, November 13th from 1:30pm - 3:00pm
-Location: TBA
+* Date & Time: Tuesday, November 13th from 1:30pm - 3:00pm
+* Location: TBA
 
 ## RMarkdown
 RMarkdown supports:
