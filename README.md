@@ -2,7 +2,7 @@
 
 ## Event description
 * Date & Time: Tuesday, November 13th from 1:30pm - 3:00pm
-* Location: TBA
+* Location: Sidney Smith Rm. 2120
 
 ## RMarkdown
 RMarkdown supports:
