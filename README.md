@@ -2,7 +2,8 @@
 
 ## Event description
 * Date & Time: Tuesday, November 13th from 1:30pm - 3:00pm
-* Location: Rm. 350 in [Myhal Centre](https://goo.gl/maps/T4ABrEdFTBo)
+* Location: Sidney Smith Rm. 85 (Subground)
+[!image](https://github.com/psy218/lrm/image/ss85.png)
 
 ## RMarkdown
 RMarkdown supports:
@@ -15,4 +16,4 @@ RMarkdown supports:
 * In your RStudio, install RMarkdown by typing `install.packages("rmarkdown")`.
 
 **Workshop Materials**
-* Clone or download the materials from this [git repo](https://www.github.com/psy218/lrm) by clicking download button ![image](https://docs.buddybuild.com/repository/github/img/click-use-ssh.png)
+* Clone or download the materials from this [git repo](https://www.github.com/psy218/lrm) by clicking [here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/psy218/lrm)
