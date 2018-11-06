@@ -2,43 +2,294 @@
 title: "rmarkdown"
 author: "Sue Song"
 date: '2018-11-04'
-output: powerpoint_presentation
+output: 
+  html_document: 
+    keep_md: true
+    self_contained: no
+  pdf_document: 
+    toc: yes
+  word_document: default
+editor_options:
+  chunk_output_type: inline
+bibliography: zotero_ref.bib
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+# R environment 
+```{r global_options, message=FALSE, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, 
+                      warning=FALSE, 
+                      message=FALSE, 
+                      cache=TRUE,
+                      highlight = TRUE,
+                      fig.width = 8, 
+                      fig.height = 5)
 ```
 
-# Let's RMarkdown
+```{r package_options, message=FALSE, include=FALSE}
+knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
+options(digits = 3, scipen = 10)
+```
 
-## Prerequisites
+```{r library, message=FALSE, include=FALSE}
+library("tidyverse"); library("here"); library("knitr")
+```
+
+# Prerequisites
 - RStudio
 - RMarkdown
-```{r}
-install.packages("rmarkdown")
+```{r message=FALSE, warning=FALSE}
+# install.packages("rmarkdown", repos = "http://cran.utstat.utoronto.ca/")
 ```
 - knitr
+```{r message=FALSE, warning=FALSE}
+# install.packages("knitr", repos = "http://cran.utstat.utoronto.ca/")
+```
+- pandoc
+Check the [installation guide](https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md)
+- papaja (for APA-style manuscript)
 ```{r}
-install.packages("knitr")
+# devtools::install_github("crsh/papaja")
+```
+- LaTeX (for pdf rendering)
+
+# Structure 
+## Header
+### Metadata in the Header (YAML)
+![](/slide/slide_files/structure.png)
+
+translate the argument into YAML using `yaml::as.yaml`.
+```{r}
+cat(yaml::as.yaml(list(
+  title = "example document",
+  author = "su so"
+)))
 ```
 
-## Structure 
-![structure](/slide/slide_files/structure.png){width=80% height=80%}
+Essential components:
+1. output format
+  + `html_document`
+  + `word_document`
+  + `pdf_document`
+  
+2. `bibliography`
+use [@R-base] 
 
-### 1. Metadata in the Header (YAML)
----
-title: "Let's RMarkdown"
-author: "su so"
-date: "2018-10-04"
-output: html_document
----
-
-### 2. Code chunk 
-- keyboard shortcut: option + command + I
-```{r}
-x <- 1 + 1
+## Code chunks
+```{r exdata, message=FALSE, warning=FALSE, include=FALSE}
+example_data <- data_frame(id = rep(1:50),
+                           frnd_num = sample(c(0:7), 50, replace = T),
+                           age = sample(c(18:100), 50, replace = T),
+                           weight = sample(c(50:100), 50, replace = T))
 ```
 
-### 3. Text paragraphs
-Su has `r x` friends. 
+### Step 1. Insert code chunks
+Keyboard shortcuts:
+- Ctrl + Alt + I (Windows)
+- Cmd + Option + I (Mac)
 
+### Step 2. Define *chunk options*
+
+```{r option, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+
+```
+
+#### Options for the output documents
+A full list of options available [here](https://yihui.name/knitr/options/).
+
+* `eval`: execute a code chunk?
+* `echo`: include the source code in the output document?
+  + selective inclusion: e.g., `echo=3:5` 
+```{r echo=3:5}
+library("tidyverse") #1
+library("here") #2
+x <- c("a", "b", "c") #3
+y <- c(1:3) #4
+cbind(x, y) #5
+rm(x); rm(y) #6
+```
+
+* `results`:
+  + `hide`: hide result in the text output?
+  + `asis`: 
+```{r results='asis'}
+cat("This is how results are written\n as is.")
+```
+* `warning`, `message`, `error`: show warnings and (error) messages in the output document?
+* `include`: do not show in the output document (but still run the code chunk)
+  + equivalent to `echo=F, results='hide', warning=F, message=F`
+* `cache`: computations are saved to prevent re-running the code chunk (unless there are changes)
+  + `audodep`: if a code chunk that subsequent code chunks depend on changes 
+
+#### Options for the figures & plots
+* `fig.width` and `fig.height` define plots in inches. 
+  + `fig.dim = c(6, 4)` is equivalent to  `fig.width=6, fig.height=4`
+  + Optimal ratio for the word document: `fig.width=8, fig.height=5`
+  
+### Step 0. Define the global option instead
+
+## Text paragraphs
+### inline R code
+```{r table1}
+participant_demo <- example_data %>%
+  summarize(n = n(),
+            mean_age = mean(age, na.rm = T),
+            sd = sd(age, na.rm = T),
+            mean_kg = mean(weight, na.rm = T))
+```
+
+We recruited a sample of `r participant_demo$n` participants whose mean age was `r participant_demo$mean_age` (SD = `r participant_demo$sd`). 
+
+### inline formatting 
+[Basic formatting](https://rmarkdown.rstudio.com/authoring_basics.html)
+#### equation
+```{r}
+lm.fit <- summary(lm(weight ~ age,
+             data = example_data))
+```
+$y_{ij}$ = $\beta_0 + \beta_1 age + e$ 
+
+...a positive slope, $\beta$ = `r coef(lm.fit)[2, 1]`, $p$ = `r round(coef(lm.fit)[2, 4],2)`
+
+r-squared:
+$R^2^$ = `r round(lm.fit$r.squared, 2)`
+
+chi-square: 
+$\chi^2$ 
+
+For more LaTex [math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html)
+
+#### block quote
+> ...As this pseudo-workshop dragged on, the scholars have struggled to sit through the talk. People wondered, when is this misery going to end?
+>
+> --- scholars
+
+#### footnote
+^[1]
+^[1]: This is where a foot notes.
+
+### figures
+* `fig.show='hold'` to create a side-by-side plots
+```{r fig1, fig.show='hold', out.width=50%}
+par(mar = c(4, 4, 0.2, 0.1))
+plot(cars)
+```
+
+As shown in \@ref(fig:fig2), the relationship is non-linear.
+```{r fig2, fig.show='hold', fig.width=50%}
+plot(pressure)
+```
+
+APA-formatted Plot
+```{r apa_graph}
+ggplot(mtcars, aes(x = mpg, y = disp, colour = as.factor(mtcars$gear))) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(x = "My Pony is Great (MPG)",
+       y = "Dispicable (Disp)") +
+  scale_color_discrete("Gear") +
+  papaja::theme_apa(box = T) +
+  theme(legend.position = c(0.8, 0.75))
+
+ggsave("plot.png", width = 8, height = 5)
+# unlink("plot.png")
+```
+
+Import figures
+```{r}
+knitr::include_graphics(here("plot.png"))
+```
+
+
+### table
+
+Using `knitr::kable`
+```{r}
+knitr::kable(participant_demo,
+             booktabs = T,
+             caption="Participant demographics",
+             digits = 2)
+```
+
+Test statistics 
+```{r}
+knitr::kable(coef(summary(lm(weight ~ age,
+                             data = example_data))),
+             digits = 2)
+```
+
+```{r}
+knitr::kable(broom::tidy(lm.fit),
+             digits = 3)
+```
+
+
+### Citing references
+1. Add the following lines in the YAML header:
+---
+csl: apa.csl
+bibliography: [reference.bib]
+---
+
+2. cite away
+[see @hall_engineering_2015; also @joel_wanting_2017]. 
+Will Michael Hall said [-@hall_engineering_2015]...
+
+#### citr add-in
+```{r}
+# install.packages("citr")
+options(citr.use_betterbiblatex = T)
+```
+
+#### papja
+Step 1. `papaja::r_refs` to create a bib file 
+  + .bib file will include citations for R and R packages used in the session. 
+```{r}
+papja::r_refs(file = "reference.bib")
+```
+
+Step 2. `papja::cite_r` to translate them into human-readable citations
+```{r}
+citations <- papaja::cite_r(file="reference.bib"
+                    #, pkgs = c("papaja", "here") 
+                    #, withhold = F
+                    #, footnote = T
+                    )
+```
+I used `r citations` for the data analysis.
+
+# Creating your own workflow
+## 1. Importing a dataset from a master script
+```{r data, message=FALSE, include=FALSE}
+source(here("data_analysis", "data_analysis_prep.R"))
+```
+
+## 2. Run analyses like a boss
+### Eligibile participants
+```{r exclusion, echo=FALSE}
+df <- df %>%
+  mutate(exclusion = case_when(
+    attn_check == "pass" &
+      var_low == "acceptable" ~ "eligible",
+    TRUE ~ "ineligible"))
+```
+
+
+### Demographics
+```{r}
+(demographics <- df %>%
+  # group_by(attn_check) %>%
+   filter(exclusion == "eligible") %>%
+  summarise(n = n(),
+            age = mean(age, na.rm = T),
+            female = length(which(gender == "female")),
+            male = length(which(gender == "male"))))
+```
+In a sample of `r demographics$n` participants...
+
+### Regression analyses
+
+
+# Resources
+1. [cheetsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+
+\newpage
+# References
