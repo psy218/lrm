@@ -19,7 +19,7 @@ RMarkdown supports:
 	+ knitr
 	`install.packages("knitr", repos = "http://cran.utstat.utoronto.ca/")`
 	+ papaja
-	`# devtools::install_github("crsh/papaja")`
+	`devtools::install_github("crsh/papaja")`
 
 **pandoc**
 * Check the [installation guide](https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md)
