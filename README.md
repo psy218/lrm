@@ -3,7 +3,7 @@
 ## Event description
 * Date & Time: Tuesday, November 13th from 1:30pm - 3:00pm
 * Location: Sidney Smith Rm. 85 (Subground)
-[!image](https://github.com/psy218/lrm/image/ss85.png)
+![image](https://github.com/psy218/lrm/blob/master/image/ss85.png)
 
 ## What is RMarkdown?
 RMarkdown supports:
