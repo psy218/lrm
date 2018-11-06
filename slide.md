@@ -16,24 +16,11 @@ editor_options:
 bibliography: zotero_ref.bib
 ---
 # R environment 
-```{r global_options, message=FALSE, include=FALSE}
-knitr::opts_chunk$set(echo=TRUE, 
-                      warning=FALSE, 
-                      message=FALSE, 
-                      cache=TRUE,
-                      highlight = TRUE,
-                      fig.width = 8, 
-                      fig.height = 5)
-```
 
-```{r package_options, message=FALSE, include=FALSE}
-knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
-options(digits = 3, scipen = 10)
-```
 
-```{r library, message=FALSE, include=FALSE}
-library("tidyverse"); library("here"); library("knitr")
-```
+
+
+
 
 # Structure 
 ## Header
@@ -41,11 +28,17 @@ library("tidyverse"); library("here"); library("knitr")
 ![](/slide/slide_files/structure.png)
 
 translate the argument into YAML using `yaml::as.yaml`.
-```{r}
+
+```r
 cat(yaml::as.yaml(list(
   title = "example document",
   author = "su so"
 )))
+```
+
+```
+## title: example document
+## author: su so
 ```
 
 Essential components:
@@ -72,21 +65,30 @@ A full list of options available [here](https://yihui.name/knitr/options/).
 *`eval`: execute a code chunk?
 *`echo`: include the source code in the output document?
   +selective inclusion: e.g., `echo=3:5` 
-```{r echo=3:5}
-library("tidyverse") #1
-library("here") #2
+
+```r
 x <- c("a", "b", "c") #3
 y <- c(1:3) #4
 cbind(x, y) #5
-rm(x); rm(y) #6
+```
+
+```
+##      x   y  
+## [1,] "a" "1"
+## [2,] "b" "2"
+## [3,] "c" "3"
 ```
 
 *`results`:
   +`hide`: hide result in the text output?
   +`asis`: 
-```{r results='asis'}
+
+```r
 cat("This is how results are written\n as is.")
 ```
+
+This is how results are written
+ as is.
 *`warning`, `message`, `error`: show warnings and (error) messages in the output document?
 *`include`: do not show in the output document (but still run the code chunk)
   +equivalent to `echo=F, results='hide', warning=F, message=F`
@@ -99,14 +101,18 @@ cat("This is how results are written\n as is.")
 
 ### Step 3. Code away
 #### Create a plot
-```{r fig1}
+
+```r
 plot(cars)
 ```
+
+![](slide_files/figure-html/fig1-1.png)<!-- -->
 
 As shown in \@ref(fig1), there is a relationship.
 
 APA-formatted Plot
-```{r apa_graph}
+
+```r
 ggplot(mtcars, aes(x = mpg, y = disp, colour = as.factor(mtcars$gear))) +
   geom_point() +
   geom_smooth(method = "lm") +
@@ -115,20 +121,28 @@ ggplot(mtcars, aes(x = mpg, y = disp, colour = as.factor(mtcars$gear))) +
   scale_color_discrete("Gear") +
   papaja::theme_apa(box = T) +
   theme(legend.position = c(0.8, 0.75))
+```
 
+![](slide_files/figure-html/apa_graph-1.png)<!-- -->
+
+```r
 ggsave("plot.png", width = 8, height = 5)
 # unlink("plot.png")
 ```
 
 Import figures
-```{r}
+
+```r
 knitr::include_graphics(here("plot.png"))
 ```
+
+<img src="/Users/suesong/R/lrm/slide/plot.png" width="2400" />
 
 
 #### table
 Using `knitr::kable`
-```{r}
+
+```r
 mtcars %>%
   summarise(n = n(),
             disp_mean = mean(disp, na.rm = T),
@@ -139,18 +153,48 @@ knitr::kable(booktabs = T,
              digits = 2)
 ```
 
+
+
+Table: Summary Table
+
+  n   disp_mean   disp_sd
+---  ----------  --------
+ 32      230.72    123.94
+
 Test statistics 
-```{r}
+
+```r
 knitr::kable(coef(summary(lm(disp ~ wt*as.factor(gear),
                              data = mtcars))),
              digits = 2)
 ```
 
-```{r}
+                       Estimate   Std. Error   t value   Pr(>|t|)
+--------------------  ---------  -----------  --------  ---------
+(Intercept)              -50.16        56.99     -0.88       0.39
+wt                        96.71        14.34      6.75       0.00
+as.factor(gear)4          26.55        80.74      0.33       0.74
+as.factor(gear)5         -66.28        93.83     -0.71       0.49
+wt:as.factor(gear)4      -40.68        25.67     -1.58       0.13
+wt:as.factor(gear)5       24.43        30.82      0.79       0.44
+
+
+```r
 knitr::kable(broom::tidy(lm(disp ~ wt*as.factor(gear),
                              data = mtcars)),
              digits = 3)
 ```
+
+
+
+term                   estimate   std.error   statistic   p.value
+--------------------  ---------  ----------  ----------  --------
+(Intercept)             -50.162      56.985      -0.880     0.387
+wt                       96.712      14.336       6.746     0.000
+as.factor(gear)4         26.550      80.737       0.329     0.745
+as.factor(gear)5        -66.280      93.834      -0.706     0.486
+wt:as.factor(gear)4     -40.676      25.671      -1.585     0.125
+wt:as.factor(gear)5      24.431      30.819       0.793     0.435
 
 ## Text paragraphs
 
@@ -158,13 +202,39 @@ knitr::kable(broom::tidy(lm(disp ~ wt*as.factor(gear),
 [Basic formatting](https://rmarkdown.rstudio.com/authoring_basics.html)  
 
 #### equation
-```{r}
+
+```r
 summary(lm.fit <- lm(disp ~ as.factor(gear)*wt,
                      data = mtcars))
 ```
+
+```
+## 
+## Call:
+## lm(formula = disp ~ as.factor(gear) * wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -74.125 -21.352  -4.293  23.814  83.417 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)           -50.16      56.99  -0.880    0.387    
+## as.factor(gear)4       26.55      80.74   0.329    0.745    
+## as.factor(gear)5      -66.28      93.83  -0.706    0.486    
+## wt                     96.71      14.34   6.746  3.7e-07 ***
+## as.factor(gear)4:wt   -40.68      25.67  -1.585    0.125    
+## as.factor(gear)5:wt    24.43      30.82   0.793    0.435    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 44.68 on 26 degrees of freedom
+## Multiple R-squared:  0.891,	Adjusted R-squared:   0.87 
+## F-statistic:  42.5 on 5 and 26 DF,  p-value: 1.058e-11
+```
 $y_{ij}$ = $\beta_0 + \beta_1 age + e$ 
 
-...a positive slope, $\beta$ = `r round(coef(lm.fit)[4],2)`, $p$ = `r round(coef(summary(lm.fit))[4, 4],2)`
+...a positive slope, $\beta$ = 96.71, $p$ = 0
 
 r-squared:
 $R^2$
@@ -181,67 +251,59 @@ For more LaTex [math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.ht
 
 #### footnote
 ^[1]
-^[] This is where a foot notes.
+^[1]: This is where a foot notes.
 
 
 ### Citing references  
 
-1. Add the following lines in the YAML header:
+Add the following lines in the YAML header:
 ---
 csl: apa.csl
 bibliography: reference.bib
 ---
 
-2. cite away  
-
-...hello world [see @hall_engineering_2015; also @joel_wanting_2017]
-
-Will Michael Hall [-@hall_engineering_2015] said...  
+2. cite away
+[see @hall_engineering_2015; also @joel_wanting_2017]. 
+Will Michael Hall said [-@hall_engineering_2015]...
 
 #### citr add-in
-```{r}
+
+```r
 # install.packages("citr")
 options(citr.use_betterbiblatex = T)
 ```
 
 #### papja
-Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
+Step 1. `papaja::r_refs` to create a bib file 
+  + .bib file will include citations for R and R packages used in the session. 
 
-Step 2. `papaja::r_refs` to create a bib file  
-  +.bib file will include citations for R and R packages used in the session. 
-```{r}
+```r
 papaja::r_refs(file = "zotero_ref.bib")
 ```
 
-Step 3. `papja::cite_r` to translate them into human-readable citations  
-```{r}
+Step 2. `papja::cite_r` to translate them into human-readable citations
+
+```r
 citations <- papaja::cite_r(file="zotero_ref.bib"
                     #, pkgs = c("papaja", "here") 
                     #, withhold = F
                     #, footnote = T
                     )
 ```
-I used `r citations` for the data analysis.
+I used R [Version 3.5.1; @] and the R-packages *}base* [@}R-base], *bindrcpp* [Version 0.2.2; @R-bindrcpp], *dplyr* [Version 0.7.7; @R-dplyr], *forcats* [Version 0.3.0; @R-forcats], *ggplot2* [Version 3.1.0; @R-ggplot2], *here* [Version 0.1; @R-here], *knitr* [Version 1.20; @R-knitr], *purrr* [Version 0.2.5; @R-purrr], *readr* [Version 1.1.1; @R-readr], *shiny* [Version 1.1.0; @R-shiny], *stringr* [Version 1.3.1; @R-stringr], *tibble* [Version 1.4.2; @R-tibble], *tidyr* [Version 0.8.2; @R-tidyr], and *tidyverse* [Version 1.2.1.9000; @R-tidyverse] for the data analysis.
 
 # Creating your own workflow
 ## 1. Importing a dataset from the master script
-```{r data, message=FALSE, include=FALSE}
-source(here("data_analysis", "data_analysis_prep.R"))
-```
+
 
 ## 2. Run analyses like a boss
 ### Eligibile participants
-```{r exclusion, echo=FALSE}
-df <- df %>%
-  mutate(exclusion = case_when(
-    attn_check == "pass" &
-      var_low == "acceptable" ~ "eligible",
-    TRUE ~ "ineligible"))
-```
+
 
 
 ### Demographics
-```{r}
+
+```r
 (demographics <- df %>%
   # group_by(attn_check) %>%
    filter(exclusion == "eligible") %>%
@@ -250,9 +312,16 @@ df <- df %>%
             female = length(which(gender == "female")),
             male = length(which(gender == "male"))))
 ```
-In a sample of `r demographics$n` participants...
 
-### 
+```
+## # A tibble: 1 x 4
+##       n   age female  male
+##   <int> <dbl>  <int> <int>
+## 1   205  33.3     90   113
+```
+In a sample of 205 participants...
+
+### Regression analyses
 
 
 
