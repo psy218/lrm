@@ -15,14 +15,14 @@ RMarkdown supports:
 * Install [RStudio](https://www.rstudio.com/products/rstudio/download/).
 * In your RStudio, install:
 	+ RMarkdown 
-	`install.packages("rmarkdown")`
+	`install.packages("rmarkdown", repos = "http://cran.utstat.utoronto.ca/")`
 	+ knitr
 	`install.packages("knitr", repos = "http://cran.utstat.utoronto.ca/")`
 	+ papaja
 	`# devtools::install_github("crsh/papaja")`
 
 **pandoc**
-	+ Check the [installation guide](https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md)
+* Check the [installation guide](https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md)
 
 **LaTeX** (_optional_)
   + Windows: [MikTeX](https://miktex.org/) 
