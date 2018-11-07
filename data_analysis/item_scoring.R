@@ -20,8 +20,3 @@ df$condition <- dplyr::recode_factor(df$condition, "undesirable" = -1, "desirabl
 df$gender <- factor(df$gender, 
                     levels = 0:2,
                     labels = c("female", "male", "other"))
-
-# condition
-# 0 = undesirable; 1 = desirable
-df <- df %>% 
-  mutate_at("condition", funs(recode(., `-1` = 0, `1` = 1)))
