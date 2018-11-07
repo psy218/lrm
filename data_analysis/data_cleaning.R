@@ -1,22 +1,33 @@
 #---- variable names -----
 #' renaming variables to be machine-readable (e.g., removing spaces)
-# attention check Q1
-df <- df %>%
-  rename_at( vars(starts_with("attn_check_1-")), funs(paste("attn_check_1", sep = "_", 1:7)))
-  
 # ethnicity
 df <- df %>%
   rename_at (vars(starts_with("ethnicity-")), 
              funs(paste("ethnicity", sep = "_", 1:11)))
 
-# activity
-df <- df %>%
-rename_at (vars(starts_with("activity-")), 
-           funs(paste("activity", sep = "_", 1:8)))
 
 # ---- removing unnecessary columns ----
+# df <- df %>%
+#   dplyr::select(-starts_with("instruction"), # instructions
+#                 -starts_with("Timing"), # time participants stayed on a page
+#                 -contains("Location")) # location data
+
+# ---- recoding manually inputted answers ----
+# gender
+df %>%
+  filter(gender==2) %>%
+  select(gender, `gender-TEXT`)
+
+# ethnicity
+df %>%
+  mutate(ethnicity_11 = tolower(ethnicity_11)) %>%
+  filter(ethnicity_10==1) %>%
+  select(ethnicity_10, ethnicity_11)
+
+## text answers to lower cases
 df <- df %>%
-  dplyr::select(-starts_with("instruction"), # instructions
-                -starts_with("Timing"), # time participants stayed on a page
-                -starts_with("trait-${e://Field/condition}"), # qualitative text data
-                -contains("Location")) # location data
+  mutate_at(vars(ethnicity_11), tolower)
+
+## recode as Caucasian those who said "white" but indicated their ethnicity to be other
+df$ethnicity_1[df$ethnicity_11=="white"] <- 1
+
