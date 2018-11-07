@@ -1,0 +1,34 @@
+---
+title: "analysis_report"
+author: "Sue Song"
+date: 'Sys.Date()'
+output: html_document
+---
+
+```{r global_options, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      cache=TRUE,
+                      highlight = TRUE)
+```
+
+```{r package_options, include=FALSE, message=FALSE}
+knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
+options(digits = 3, scipen = 10)
+```
+
+```{r library, include=FALSE, message=FALSE}
+library("tidyverse"); library("broom"); library("ggplot2"); library("here")
+```
+
+For reproducibility:
+```{r checkpoint, message=FALSE}
+checkpoint::checkpoint(Sys.Date()) # create a snapshot folder for all the install pakges
+getOption("repos") # check that the CRAN mirror set to MRAN snapshot
+```
+
+```{r}
+sessionInfo()
+```
+
