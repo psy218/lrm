@@ -2,24 +2,30 @@
 title: "analysis_report"
 author: "Sue Song"
 date: 'Sys.Date()'
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
-# Setting the environment
-## Set global chunk options
+# Setting the environment 
+This won't be shown in your document
 ```{r global_options, include=FALSE, message=FALSE}
+## Set global chunk options
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE, 
                       message = FALSE,
                       cache=TRUE,
                       highlight = TRUE)
 ```
-## Set package options
+
 ```{r package_options, include=FALSE, message=FALSE}
+## Set package options
 knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
 options(digits = 3, scipen = 10)
 ```
-## Load packages
+
 ```{r library, include=FALSE, message=FALSE}
+## Load packages
 library("tidyverse"); library("broom"); library("ggplot2"); library("here")
 ```
 
@@ -36,7 +42,7 @@ sessionInfo()
 ```
 
 ## 1. Importing a dataset from the master script
-```{r data, message=FALSE, include=FALSE}
+```{r data}
 source(here("data_analysis", "data_analysis_prep.R"))
 ```
 
@@ -56,11 +62,18 @@ table(df$exclusion)
 ```
 
 ### Center your variables
-```{r}
+Create a function to mean-center your continuous variables
+```{r centering_function}
+mean_c <- function(x) {
+  x - mean(x, na.rm = T)
+}
+```
+
+```{r centering}
 df <- df %>%
   filter(exclusion == "eligible") %>%
-  mutate(prom.c = promotion - mean(promotion, na.rm = T),
-         prev.c = prevention - mean(prevention, na.rm = T))
+  mutate(prom.c = mean_c(promotion),
+         prev.c = mean_c(prevention))
 ```
 
 
@@ -69,10 +82,11 @@ df <- df %>%
 ```{r demographics, dependson="exclusion"}
 (demographics <- df %>%
    group_by(exclusion) %>%
-  summarize(n = n(),
+   summarize(n = n(),
             age = round(mean(age, na.rm = T),2),
             female = length(which(gender == "female")),
-            male = length(which(gender == "male"))))
+            male = length(which(gender == "male"))) %>%
+   ungroup())
 ```
 
 In our sample, `r demographics$n[demographics$exclusion=="eligible"]` participants met our eligibile criteria to participate  
@@ -80,7 +94,7 @@ In our sample, `r demographics$n[demographics$exclusion=="eligible"]` participan
 ### Correlations
 Bi-variate correlation using:
 a) `psych` package
-```{r}
+```{r cor_psych}
 psych::corr.test(df[ ,c("promotion", "prevention")], 
                  df[ ,c("profile_num", "profile_interest_num")],
                  use = "pairwise",
@@ -90,7 +104,7 @@ psych::corr.test(df[ ,c("promotion", "prevention")],
 
 
 b) `Hmisc` package:
-```{r message=FALSE}
+```{r cor_hmisc}
 df %>%
   select(promotion, prevention, profile_num, profile_interest_num) %>%
   as.matrix() %>% 
@@ -98,7 +112,7 @@ df %>%
 ```
 
 c) `corrplot` package:
-```{r}
+```{r corplot}
 df %>%
   select(promotion, prevention, profile_num) %>%
   cor(use="complete.obs") %>%
@@ -107,7 +121,7 @@ df %>%
 ```
 
 ### Regression analyses
-```{r}
+```{r lm_model}
 glm(profile_num ~ promotion + prevention, 
             family = "poisson",
             data = subset(df, exclusion =="eligible")) %>%
@@ -116,27 +130,22 @@ glm(profile_num ~ promotion + prevention,
 ```
 
 ### plot
-```{r}
+```{r plot, echo=4:10}
+condition_label <- c(
+  `-1` = "Undesirable-trait strategy",
+  `1` = "Desirable-trait strategy")
 df %>%
   ggplot() +
-  geom_smooth(aes(x = prom.c, y = fit_success),  colour = "blue", method = lm, se = T) +
-  geom_smooth(aes(x = prev.c, y = fit_success),  colour = "gold", method = lm, se = T) +
+  geom_smooth(aes(x = prom.c, y = profile_num),  colour = "blue", method = lm, se = T) +
+  geom_smooth(aes(x = prev.c, y = profile_num),  colour = "gold", method = lm, se = T) +
   labs( x = "Regulatory focus", y = "Overall Perceived Success") +
   facet_wrap(~condition, labeller = as_labeller(condition_label)) + 
-  labs(x = "Regulatory Focus", y = "Strategy Ease")
+  labs(x = "Regulatory Focus", y = "Strategy Ease") +
+  theme_classic() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.border=element_blank(),
+        axis.line=element_line(),
+        text=element_text(family='Times', size = 24))
 ```
-
-
-# References
-```{r create_r-references}
-r_refs(file = "r-references.bib")
-```
-
-\begingroup
-\setlength{\parindent}{-0.5in}
-\setlength{\leftskip}{0.5in}
-
-<div id = "refs"></div>
-\endgroup
-
 
