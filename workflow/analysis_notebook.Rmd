@@ -126,7 +126,6 @@ glm(profile_num ~ promotion + prevention,
             family = "poisson",
             data = subset(df, exclusion =="eligible")) %>%
   summary.glm
-  # %>% broom::tidy()
 ```
 
 ### plot
@@ -138,9 +137,9 @@ df %>%
   ggplot() +
   geom_smooth(aes(x = prom.c, y = profile_num),  colour = "blue", method = lm, se = T) +
   geom_smooth(aes(x = prev.c, y = profile_num),  colour = "gold", method = lm, se = T) +
-  labs( x = "Regulatory focus", y = "Overall Perceived Success") +
+  labs( x = "Regulatory focus", y = "Number of\nProfiles Viewed") +
   facet_wrap(~condition, labeller = as_labeller(condition_label)) + 
-  labs(x = "Regulatory Focus", y = "Strategy Ease") +
+  labs(x = "Regulatory Focus", y = "Number of\nProfiles Viewed") +
   theme_classic() +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
@@ -148,4 +147,5 @@ df %>%
         axis.line=element_line(),
         text=element_text(family='Times', size = 24))
 ```
+
 
