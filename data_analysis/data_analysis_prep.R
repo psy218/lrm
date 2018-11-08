@@ -11,11 +11,10 @@ library("tidyverse"); library("here")
 # 0. Import data ----
 df <- readr::read_csv(here("data", "raw_data.csv"), 
                       col_types = list(
-                        `attn_check_1-Strongly disagree<br>1` = col_integer(),
-                        `attn_check_1-2` =  col_integer(),
-                        `attn_check_1-5` = col_integer(),
-                        `attn_check_1-6` = col_integer(),
-                        `attn_check_1-Strongly<br/> agree<br/>7` = col_integer()),
+                        `gender-TEXT` = col_character(),
+                        `ethnicity-Middle Eastern (e.g., Afghanistan, Iran)` = col_integer(),
+                        `ethnicity-Southeast Asian (e.g., Vietnam, Cambodia, Malaysia)` = col_integer(),
+                        `ethnicity-Native Hawaiian or Pacific Islander` = col_integer()),
                       skip = 1)
 
 
