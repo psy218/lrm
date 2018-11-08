@@ -233,7 +233,7 @@ div.tocify {
 <div id="structure" class="section level1">
 <h1>Structure</h1>
 <div id="header" class="section level2">
-<h2>Header</h2>
+<h2>1. Header</h2>
 <div id="metadata-in-the-header-yaml" class="section level3">
 <h3>Metadata in the Header (YAML)</h3>
 <p><img src="/slide/slide_files/structure.png" /></p>
@@ -251,7 +251,7 @@ div.tocify {
 </div>
 </div>
 <div id="code-chunks" class="section level2">
-<h2>Code chunks</h2>
+<h2>2. Code chunks</h2>
 <div id="step-1.-insert-code-chunks" class="section level3">
 <h3>Step 1. Insert code chunks</h3>
 <p>Keyboard shortcuts: - Ctrl + Alt + I (Windows) - Cmd + Option + I (Mac)</p>
@@ -293,11 +293,12 @@ cbind(x, y) #5</code></pre>
        y = &quot;Dispicable (Disp)&quot;) +
   scale_color_discrete(&quot;Gear&quot;) +
   papaja::theme_apa(box = T) +
-  theme(legend.position = c(0.8, 0.75))</code></pre>
-<p><img src="slide_files/figure-html/apa_graph-1.png" /><!-- --></p>
-<pre class="r"><code>ggsave(&quot;plot.png&quot;, width = 8, height = 5)
+  theme(legend.position = c(0.8, 0.75))
+
+ggsave(&quot;plot.png&quot;, width = 8, height = 5)
 # unlink(&quot;plot.png&quot;)</code></pre>
-<p>Import figures</p>
+<p><img src="slide_files/figure-html/apa_graph-1.png" /><!-- --></p>
+<p>(Optional) Import a figure</p>
 <pre class="r"><code>knitr::include_graphics(here(&quot;plot.png&quot;))</code></pre>
 <p><img src="plot.png" width="2400" /></p>
 </div>
@@ -324,8 +325,8 @@ knitr::kable(booktabs = T,
 <tbody>
 <tr class="odd">
 <td align="right">32</td>
-<td align="right">230.72</td>
-<td align="right">123.94</td>
+<td align="right">231</td>
+<td align="right">124</td>
 </tr>
 </tbody>
 </table>
@@ -346,43 +347,43 @@ knitr::kable(booktabs = T,
 <tbody>
 <tr class="odd">
 <td>(Intercept)</td>
-<td align="right">-50.16</td>
-<td align="right">56.99</td>
+<td align="right">-50.2</td>
+<td align="right">57.0</td>
 <td align="right">-0.88</td>
 <td align="right">0.39</td>
 </tr>
 <tr class="even">
 <td>wt</td>
-<td align="right">96.71</td>
-<td align="right">14.34</td>
+<td align="right">96.7</td>
+<td align="right">14.3</td>
 <td align="right">6.75</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="odd">
 <td>as.factor(gear)4</td>
-<td align="right">26.55</td>
-<td align="right">80.74</td>
+<td align="right">26.6</td>
+<td align="right">80.7</td>
 <td align="right">0.33</td>
 <td align="right">0.74</td>
 </tr>
 <tr class="even">
 <td>as.factor(gear)5</td>
-<td align="right">-66.28</td>
-<td align="right">93.83</td>
+<td align="right">-66.3</td>
+<td align="right">93.8</td>
 <td align="right">-0.71</td>
 <td align="right">0.49</td>
 </tr>
 <tr class="odd">
 <td>wt:as.factor(gear)4</td>
-<td align="right">-40.68</td>
-<td align="right">25.67</td>
+<td align="right">-40.7</td>
+<td align="right">25.7</td>
 <td align="right">-1.58</td>
 <td align="right">0.13</td>
 </tr>
 <tr class="even">
 <td>wt:as.factor(gear)5</td>
-<td align="right">24.43</td>
-<td align="right">30.82</td>
+<td align="right">24.4</td>
+<td align="right">30.8</td>
 <td align="right">0.79</td>
 <td align="right">0.44</td>
 </tr>
@@ -404,43 +405,43 @@ knitr::kable(booktabs = T,
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-50.162</td>
-<td align="right">56.985</td>
+<td align="right">-50.2</td>
+<td align="right">57.0</td>
 <td align="right">-0.880</td>
 <td align="right">0.387</td>
 </tr>
 <tr class="even">
 <td align="left">wt</td>
-<td align="right">96.712</td>
-<td align="right">14.336</td>
+<td align="right">96.7</td>
+<td align="right">14.3</td>
 <td align="right">6.746</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td align="left">as.factor(gear)4</td>
-<td align="right">26.550</td>
-<td align="right">80.737</td>
+<td align="right">26.6</td>
+<td align="right">80.7</td>
 <td align="right">0.329</td>
 <td align="right">0.745</td>
 </tr>
 <tr class="even">
 <td align="left">as.factor(gear)5</td>
-<td align="right">-66.280</td>
-<td align="right">93.834</td>
+<td align="right">-66.3</td>
+<td align="right">93.8</td>
 <td align="right">-0.706</td>
 <td align="right">0.486</td>
 </tr>
 <tr class="odd">
 <td align="left">wt:as.factor(gear)4</td>
-<td align="right">-40.676</td>
-<td align="right">25.671</td>
+<td align="right">-40.7</td>
+<td align="right">25.7</td>
 <td align="right">-1.585</td>
 <td align="right">0.125</td>
 </tr>
 <tr class="even">
 <td align="left">wt:as.factor(gear)5</td>
-<td align="right">24.431</td>
-<td align="right">30.819</td>
+<td align="right">24.4</td>
+<td align="right">30.8</td>
 <td align="right">0.793</td>
 <td align="right">0.435</td>
 </tr>
@@ -463,23 +464,23 @@ knitr::kable(booktabs = T,
 ## lm(formula = disp ~ as.factor(gear) * wt, data = mtcars)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -74.125 -21.352  -4.293  23.814  83.417 
+##    Min     1Q Median     3Q    Max 
+## -74.13 -21.35  -4.29  23.81  83.42 
 ## 
 ## Coefficients:
-##                     Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)           -50.16      56.99  -0.880    0.387    
-## as.factor(gear)4       26.55      80.74   0.329    0.745    
-## as.factor(gear)5      -66.28      93.83  -0.706    0.486    
-## wt                     96.71      14.34   6.746  3.7e-07 ***
-## as.factor(gear)4:wt   -40.68      25.67  -1.585    0.125    
-## as.factor(gear)5:wt    24.43      30.82   0.793    0.435    
+##                     Estimate Std. Error t value   Pr(&gt;|t|)    
+## (Intercept)            -50.2       57.0   -0.88       0.39    
+## as.factor(gear)4        26.6       80.7    0.33       0.74    
+## as.factor(gear)5       -66.3       93.8   -0.71       0.49    
+## wt                      96.7       14.3    6.75 0.00000037 ***
+## as.factor(gear)4:wt    -40.7       25.7   -1.58       0.13    
+## as.factor(gear)5:wt     24.4       30.8    0.79       0.44    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 44.68 on 26 degrees of freedom
-## Multiple R-squared:  0.891,  Adjusted R-squared:   0.87 
-## F-statistic:  42.5 on 5 and 26 DF,  p-value: 1.058e-11</code></pre>
+## Residual standard error: 44.7 on 26 degrees of freedom
+## Multiple R-squared:  0.891,  Adjusted R-squared:  0.87 
+## F-statistic: 42.5 on 5 and 26 DF,  p-value: 0.0000000000106</code></pre>
 <p><span class="math inline">\(y_{ij}\)</span> = <span class="math inline">\(\beta_0 + \beta_1 age + e\)</span></p>
 <p>…a positive slope, <span class="math inline">\(\beta\)</span> = 96.71, <span class="math inline">\(p\)</span> = 0</p>
 <p>r-squared: <span class="math inline">\(R^2\)</span></p>
@@ -495,7 +496,7 @@ knitr::kable(booktabs = T,
 </div>
 <div id="footnote" class="section level4">
 <h4>footnote</h4>
-<p><sup>[1] </sup>[1]: This is where a foot notes.</p>
+<p><sup>[1] </sup>[] This is where a foot notes.</p>
 </div>
 </div>
 <div id="citing-references" class="section level3">
@@ -503,11 +504,18 @@ knitr::kable(booktabs = T,
 </div>
 </div>
 <div id="add-the-following-lines-in-the-yaml-header" class="section level2">
-<h2>Add the following lines in the YAML header:</h2>
-<p>csl: apa.csl bibliography: reference.bib —</p>
+<h2>1. Add the following lines in the YAML header:</h2>
+<p><code>bibliography: reference.bib</code> <code>csl: apa.csl</code> —</p>
 <ol start="2" style="list-style-type: decimal">
-<li>cite away <span class="citation">(see Hall, Schmader, and Croft 2015; also Joel, MacDonald, and Page-Gould 2017)</span>. Will Michael Hall said <span class="citation">(2015)</span>…</li>
+<li>cite away<br />
+#### formatting<br />
+</li>
 </ol>
+<ul>
+<li><p>in-text citation … <span class="citation">(<span class="citeproc-not-found" data-reference-id="joel_wanting_2017"><strong>???</strong></span>)</span></p></li>
+<li><p>multiple citations separated by a <code>;</code> …<span class="citation">(see <span class="citeproc-not-found" data-reference-id="baldwin_relational_1992"><strong>???</strong></span>; also <span class="citeproc-not-found" data-reference-id="joel_wanting_2017"><strong>???</strong></span>)</span></p></li>
+<li><p>removing author names by putting <code>-</code> …joel <span class="citation">(<span class="citeproc-not-found" data-reference-id="joel_wanting_2017"><strong>???</strong></span>)</span></p></li>
+</ul>
 <div id="citr-add-in" class="section level4">
 <h4>citr add-in</h4>
 <pre class="r"><code># install.packages(&quot;citr&quot;)
@@ -515,69 +523,26 @@ options(citr.use_betterbiblatex = T)</code></pre>
 </div>
 <div id="papja" class="section level4">
 <h4>papja</h4>
-<p>Step 1. <code>papaja::r_refs</code> to create a bib file + .bib file will include citations for R and R packages used in the session.</p>
+<p>Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)</p>
+<p>Step 2. <code>papaja::r_refs</code> to create a bib file<br />
++.bib file will include citations for R and R packages used in the session.</p>
 <pre class="r"><code>papaja::r_refs(file = &quot;zotero_ref.bib&quot;)</code></pre>
-<p>Step 2. <code>papja::cite_r</code> to translate them into human-readable citations</p>
-<pre class="r"><code>citations &lt;- papaja::cite_r(file=&quot;zotero_ref.bib&quot;
+<p>Step 3. <code>papja::cite_r</code> to translate them into human-readable citations</p>
+<pre class="r"><code>citations &lt;- papaja::cite_r(file=here(&quot;workflow&quot;, &quot;zotero_ref.bib&quot;)
                     #, pkgs = c(&quot;papaja&quot;, &quot;here&quot;) 
                     #, withhold = F
                     #, footnote = T
                     )</code></pre>
-<p>I used R [Version 3.5.1; @] and the R-packages <em>}base</em> [@}R-base], <em>bindrcpp</em> <span class="citation">(Version 0.2.2; Müller 2018)</span>, <em>dplyr</em> <span class="citation">(Version 0.7.7; Wickham et al. 2018)</span>, <em>forcats</em> <span class="citation">(Version 0.3.0; Wickham 2018a)</span>, <em>ggplot2</em> <span class="citation">(Version 3.1.0; Wickham 2016)</span>, <em>here</em> <span class="citation">(Version 0.1; Müller 2017)</span>, <em>knitr</em> <span class="citation">(Version 1.20; Xie 2015)</span>, <em>purrr</em> <span class="citation">(Version 0.2.5; Henry and Wickham 2018)</span>, <em>readr</em> <span class="citation">(Version 1.1.1; Wickham, Hester, and Francois 2017)</span>, <em>shiny</em> <span class="citation">(Version 1.1.0; Chang et al. 2018)</span>, <em>stringr</em> <span class="citation">(Version 1.3.1; Wickham 2018b)</span>, <em>tibble</em> <span class="citation">(Version 1.4.2; Müller and Wickham 2018)</span>, <em>tidyr</em> <span class="citation">(Version 0.8.2; Wickham and Henry 2018)</span>, and <em>tidyverse</em> <span class="citation">(Version 1.2.1.9000; Wickham, n.d.)</span> for the data analysis.</p>
-</div>
-</div>
-</div>
-<div id="creating-your-own-workflow" class="section level1">
-<h1>Creating your own workflow</h1>
-<div id="importing-a-dataset-from-the-master-script" class="section level2">
-<h2>1. Importing a dataset from the master script</h2>
-</div>
-<div id="run-analyses-like-a-boss" class="section level2">
-<h2>2. Run analyses like a boss</h2>
-<div id="eligibile-participants" class="section level3">
-<h3>Eligibile participants</h3>
-</div>
-<div id="demographics" class="section level3">
-<h3>Demographics</h3>
-<pre class="r"><code>(demographics &lt;- df %&gt;%
-  # group_by(attn_check) %&gt;%
-   filter(exclusion == &quot;eligible&quot;) %&gt;%
-  summarise(n = n(),
-            age = mean(age, na.rm = T),
-            female = length(which(gender == &quot;female&quot;)),
-            male = length(which(gender == &quot;male&quot;))))</code></pre>
-<pre><code>## # A tibble: 1 x 4
-##       n   age female  male
-##   &lt;int&gt; &lt;dbl&gt;  &lt;int&gt; &lt;int&gt;
-## 1   205  33.3     90   113</code></pre>
-<p>In a sample of 205 participants…</p>
-</div>
-<div id="regression-analyses" class="section level3">
-<h3>Regression analyses</h3>
-</div>
-</div>
-</div>
-<div id="resources" class="section level1">
-<h1>Resources</h1>
-<ol style="list-style-type: decimal">
-<li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">cheetsheet</a></li>
-</ol>
+<p>I used R [Version 3.5.1; @] and the R-packages <em>}base</em> [@}R-base], <em>bindrcpp</em> <span class="citation">(Version 0.2.2; Müller 2018)</span>, <em>broom</em> <span class="citation">(Version 0.5.0; <span class="citeproc-not-found" data-reference-id="R-broom"><strong>???</strong></span>)</span>, <em>corrplot2017</em> <span class="citation">(<span class="citeproc-not-found" data-reference-id="R-corrplot2017"><strong>???</strong></span>)</span>, <em>dplyr</em> <span class="citation">(Version 0.7.7; Wickham et al. 2018)</span>, <em>forcats</em> <span class="citation">(Version 0.3.0; Wickham 2018a)</span>, <em>ggplot2</em> <span class="citation">(Version 3.1.0; Wickham 2016)</span>, <em>here</em> <span class="citation">(Version 0.1; Müller 2017)</span>, <em>knitr</em> <span class="citation">(Version 1.20; Xie 2015)</span>, <em>papaja</em> <span class="citation">(Version 0.1.0.9842; <span class="citeproc-not-found" data-reference-id="R-papaja"><strong>???</strong></span>)</span>, <em>purrr</em> <span class="citation">(Version 0.2.5; Henry and Wickham 2018)</span>, <em>readr</em> <span class="citation">(Version 1.1.1; Wickham, Hester, and Francois 2017)</span>, <em>shiny</em> <span class="citation">(Version 1.1.0; <span class="citeproc-not-found" data-reference-id="R-shiny"><strong>???</strong></span>)</span>, <em>stringr</em> <span class="citation">(Version 1.3.1; Wickham 2018b)</span>, <em>tibble</em> <span class="citation">(Version 1.4.2; Müller and Wickham 2018)</span>, <em>tidyr</em> <span class="citation">(Version 0.8.2; Wickham and Henry 2018)</span>, and <em>tidyverse</em> <span class="citation">(Version 1.2.1.9000; Wickham, n.d.)</span> for the data analysis.</p>
 
+</div>
+</div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
-<div id="ref-R-shiny">
-<p>Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan McPherson. 2018. <em>Shiny: Web Application Framework for R</em>. <a href="https://CRAN.R-project.org/package=shiny">https://CRAN.R-project.org/package=shiny</a>.</p>
-</div>
-<div id="ref-hall_engineering_2015">
-<p>Hall, William M., Toni Schmader, and Elizabeth Croft. 2015. “Engineering Exchanges: Daily Social Identity Threat Predicts Burnout Among Female Engineers.” <em>Social Psychological and Personality Science</em> 6 (5): 528–34. <a href="https://doi.org/10.1177/1948550615572637">https://doi.org/10.1177/1948550615572637</a>.</p>
-</div>
 <div id="ref-R-purrr">
 <p>Henry, Lionel, and Hadley Wickham. 2018. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a>.</p>
-</div>
-<div id="ref-joel_wanting_2017">
-<p>Joel, Samantha, Geoff MacDonald, and Elizabeth Page-Gould. 2017. “Wanting to Stay and Wanting to Go: Unpacking the Content and Structure of Relationship Stay/Leave Decision Processes.” <em>Social Psychological and Personality Science</em>. <a href="https://doi.org/10.1177/1948550617722834">https://doi.org/10.1177/1948550617722834</a>.</p>
 </div>
 <div id="ref-R-here">
 <p>Müller, Kirill. 2017. <em>Here: A Simpler Way to Find Your Files</em>. <a href="https://CRAN.R-project.org/package=here">https://CRAN.R-project.org/package=here</a>.</p>

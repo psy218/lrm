@@ -8,8 +8,10 @@ output:
     toc_float: true
     keep_md: true
     self_contained: no
-  pdf_document: 
-    toc: yes
+  github_document:
+    toc: true
+    toc_depth: 2
+    html_preview: false
   word_document: default
 editor_options:
   chunk_output_type: inline
@@ -23,7 +25,8 @@ knitr::opts_chunk$set(echo=TRUE,
                       cache=TRUE,
                       highlight = TRUE,
                       fig.width = 8, 
-                      fig.height = 5)
+                      fig.height = 5,
+                      fig.show="hold")
 ```
 
 ```{r package_options, message=FALSE, include=FALSE}
@@ -36,11 +39,11 @@ library("tidyverse"); library("here"); library("knitr")
 ```
 
 # Structure 
-## Header
-### Metadata in the Header (YAML)
+## 1. Header  
+### Metadata in the Header (YAML)  
 ![](/slide/slide_files/structure.png)
 
-translate the argument into YAML using `yaml::as.yaml`.
+translate the argument into YAML using `yaml::as.yaml`.  
 ```{r}
 cat(yaml::as.yaml(list(
   title = "example document",
@@ -57,7 +60,7 @@ Essential components:
 2. `bibliography`
 use [@R-base] 
 
-## Code chunks
+## 2. Code chunks  
 ### Step 1. Insert code chunks
 Keyboard shortcuts:
 - Ctrl + Alt + I (Windows)
@@ -93,19 +96,19 @@ cat("This is how results are written\n as is.")
 *`cache`: computations are saved to prevent re-running the code chunk (unless there are changes)
   +`audodep`: if a code chunk that subsequent code chunks depend on changes 
 
-#### Options for the figures & plots
+#### Options for the figures & plots  
 *`fig.width` and `fig.height` define plots in inches. 
   +`fig.dim = c(6, 4)` is equivalent to  `fig.width=6, fig.height=4`
 
-### Step 3. Code away
-#### Create a plot
+### Step 3. Code away  
+#### Create a plot  
 ```{r fig1}
 plot(cars)
 ```
 
 As shown in \@ref(fig1), there is a relationship.
 
-APA-formatted Plot
+APA-formatted Plot  
 ```{r apa_graph}
 ggplot(mtcars, aes(x = mpg, y = disp, colour = as.factor(mtcars$gear))) +
   geom_point() +
@@ -120,14 +123,14 @@ ggsave("plot.png", width = 8, height = 5)
 # unlink("plot.png")
 ```
 
-Import figures
+(Optional) Import a figure
 ```{r}
 knitr::include_graphics(here("plot.png"))
 ```
 
 
-#### table
-Using `knitr::kable`
+#### table  
+Using `knitr::kable`  
 ```{r}
 mtcars %>%
   summarise(n = n(),
@@ -157,7 +160,7 @@ knitr::kable(broom::tidy(lm(disp ~ wt*as.factor(gear),
 ### inline formatting  
 [Basic formatting](https://rmarkdown.rstudio.com/authoring_basics.html)  
 
-#### equation
+#### equation  
 ```{r}
 summary(lm.fit <- lm(disp ~ as.factor(gear)*wt,
                      data = mtcars))
@@ -188,26 +191,31 @@ For more LaTex [math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.ht
 
 1. Add the following lines in the YAML header:
 ---
-csl: apa.csl
-bibliography: reference.bib
+`bibliography: reference.bib`
+`csl: apa.csl`
 ---
 
 2. cite away  
+#### formatting   
+* in-text citation
+... @joel_wanting_2017 [p. 33]
 
-...hello world [see @hall_engineering_2015; also @joel_wanting_2017]
+* multiple citations separated by a `;`
+...[see @baldwin_relational_1992; also @joel_wanting_2017]
 
-Will Michael Hall [-@hall_engineering_2015] said...  
+* removing author names by putting `-`
+...joel [-@joel_wanting_2017]
 
-#### citr add-in
+#### citr add-in  
 ```{r}
 # install.packages("citr")
 options(citr.use_betterbiblatex = T)
 ```
 
-#### papja
+#### papja  
 Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
 
-Step 2. `papaja::r_refs` to create a bib file  
+Step 2. `papaja::r_refs` to create a bib file   
   +.bib file will include citations for R and R packages used in the session. 
 ```{r}
 papaja::r_refs(file = "zotero_ref.bib")
@@ -215,7 +223,7 @@ papaja::r_refs(file = "zotero_ref.bib")
 
 Step 3. `papja::cite_r` to translate them into human-readable citations  
 ```{r}
-citations <- papaja::cite_r(file="zotero_ref.bib"
+citations <- papaja::cite_r(file=here("workflow", "zotero_ref.bib")
                     #, pkgs = c("papaja", "here") 
                     #, withhold = F
                     #, footnote = T
@@ -223,43 +231,6 @@ citations <- papaja::cite_r(file="zotero_ref.bib"
 ```
 I used `r citations` for the data analysis.
 
-# Creating your own workflow
-## 1. Importing a dataset from the master script
-```{r data, message=FALSE, include=FALSE}
-source(here("data_analysis", "data_analysis_prep.R"))
-```
-
-## 2. Run analyses like a boss
-### Eligibile participants
-```{r exclusion, echo=FALSE}
-df <- df %>%
-  mutate(exclusion = case_when(
-    attn_check == "pass" &
-      var_low == "acceptable" ~ "eligible",
-    TRUE ~ "ineligible"))
-```
-
-
-### Demographics
-```{r}
-(demographics <- df %>%
-  # group_by(attn_check) %>%
-   filter(exclusion == "eligible") %>%
-  summarise(n = n(),
-            age = mean(age, na.rm = T),
-            female = length(which(gender == "female")),
-            male = length(which(gender == "male"))))
-```
-In a sample of `r demographics$n` participants...
-
-### 
-
-
-
-
-
-# Resources
-1. [cheetsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 
 \newpage
 # References
