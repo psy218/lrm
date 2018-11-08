@@ -1,0 +1,177 @@
+---
+title             : "RMarkdown Manuscript Template"
+shorttitle        : "manuscript workflow"
+
+author: 
+  - name          : "su"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+
+affiliation:
+  - id            : "1"
+    institution   : "University of Toronto"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->  
+
+keywords          : "rmarkdown"
+wordcount         : "x"
+
+bibliography      : "zotero_ref.bib"
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_word
+---
+
+```{r chunk_option, include = FALSE}
+## Set global chunk options
+knitr::opts_chunk$set(echo = FALSE, # make sure this is false 
+                      warning = FALSE, 
+                      message = FALSE,
+                      cache = TRUE,
+                      include = FALSE,
+                      fig.width = 8,
+                      fig.height = 5)
+```
+
+```{r library, include=FALSE, message=FALSE}
+## Load packages
+library("papaja"); library("tidyverse"); library("broom"); library("ggplot2"); library("here")
+```
+
+```{r sessioninfo}
+# Recording session info for reproducibility
+sessionInfo()
+```
+
+```{r data}
+# import data
+source(here("data_analysis", "data_analysis_prep.R"))
+```
+
+  Introduction intro...[@aaker_i_2001]  
+  blah balh [-@adema_vicarious_2000]  
+  yay [@anusic_nature_2009; @apfelbaum_journal_2016]  
+
+# Methods
+
+
+## Participants
+```{r exclusion}
+df <- df %>%
+  mutate(exclusion = case_when(
+    attn_check == "pass" &
+      var_low == "acceptable" ~ "eligible",
+    TRUE ~ "ineligible"))
+```
+  We excluded `r length(which(df$exclusion=="ineligible"))` participants who were deemed careless and consistent in their responses.
+  
+```{r demographics, results='asis'}
+demographics <- df %>%
+  group_by(gender) %>%
+  summarise(n = n(),
+            Mean = mean(age, na.rm = T),
+            SD = sd(age, na.rm = T),
+            Min = min(age, na.rm = T),
+            Max = max(age, na.rm = T)) %>% 
+  ungroup()
+
+knitr::kable(demographics, digits = 2)
+```
+As shown in Table 1, `r length(demographics$n[demographics$gender=="female"])` female participants were `r demographics$Mean[demographics$gender=="female"]` years old in average (SD = `r demographics$SD[demographics$gender=="female"]`). 
+
+## Material
+### *Regulatory Focus*.  
+Promotion and prevention focus was collected using a 15-item measure [@higgins_value_2005]... 
+
+## Procedure
+Data was collected throgh Amazon's MTurk...  
+
+## Data analysis
+We used `r papaja::cite_r("zotero_ref.bib")` for all our analyses.
+
+# Results
+  
+```{r lm_model}
+lm.model <- glm(profile_num ~ promotion + prevention, 
+            family = "poisson",
+            data = subset(df, exclusion =="eligible")) %>%
+  broom::tidy() 
+
+knitr::kable(lm.model, digits = 3)
+```
+Consistent with our hypothesis, promotion focus negatively predicted the number of profiles viewed, $\beta$ = `r papaja::printnum(lm.model[2, 2])`, $p$ < `r papaja::printnum(lm.model[2, 5])`...
+
+```{r plot, include=TRUE}
+
+mean_c <- function(x) {
+  x - mean(x, na.rm = T)
+}
+df <- df %>%
+  filter(exclusion == "eligible") %>%
+  mutate(prom.c = mean_c(promotion),
+         prev.c = mean_c(prevention))
+
+condition_label <- c(
+  `-1` = "Undesirable-trait strategy",
+  `1` = "Desirable-trait strategy")
+df %>%
+  ggplot() +
+  geom_smooth(aes(x = prom.c, y = profile_num),  colour = "blue", method = lm, se = T) +
+  geom_smooth(aes(x = prev.c, y = profile_num),  colour = "gold", method = lm, se = T) +
+  labs( x = "Regulatory focus", y = "Number of\nProfiles Viewed") +
+  facet_wrap(~condition, labeller = as_labeller(condition_label)) + 
+  labs(x = "Regulatory Focus", y = "Number of\nProfiles Viewed") +
+  papaja::theme_apa()
+```
+As shown in Figure 1, neither promotion nor prevention focus had an impact on the number of profiles viewed in the undesirable condition, whereas promotion focus but not prevention focus predicted positively the number of profiles viewed in desirable condition.
+
+
+# Discussion
+  My study is important. Please believe me.
+
+\newpage
+
+# References
+
+```{r create_r-references}
+papaja::r_refs(file = here("zotero_ref.bib"), append = T)
+my_citation <- papaja::cite_r(file = "zotero_ref.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup
