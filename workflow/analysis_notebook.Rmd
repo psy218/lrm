@@ -4,11 +4,10 @@ author: "Sue Song"
 date: 2018-11-12
 output: 
   html_document:
+    keep_md: true
     toc: true
-    toc_float: true
-  github_document:
-      toc: true
-      html_preview: true
+    toc_depth: 2
+  github_document: default
 ---
 
 # Setting the environment 
