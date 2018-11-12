@@ -360,22 +360,23 @@ print(sessionInfo(), locale = FALSE)
 ## [10] tibble_1.4.2         ggplot2_3.1.0        tidyverse_1.2.1.9000
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.0        cellranger_1.1.0  pillar_1.3.0     
-##  [4] compiler_3.5.1    plyr_1.8.4        bindr_0.1.1      
-##  [7] tools_3.5.1       digest_0.6.18     viridisLite_0.3.0
-## [10] lubridate_1.7.4   jsonlite_1.5      evaluate_0.12    
-## [13] nlme_3.1-137      gtable_0.2.0      lattice_0.20-35  
-## [16] pkgconfig_2.0.2   rlang_0.3.0.1     cli_1.0.1        
-## [19] rstudioapi_0.8    yaml_2.2.0        haven_1.1.2      
-## [22] withr_2.1.2       xml2_1.2.0        httr_1.3.1       
-## [25] hms_0.4.2         rprojroot_1.3-2   grid_3.5.1       
-## [28] tidyselect_0.2.5  glue_1.3.0        R6_2.3.0         
-## [31] readxl_1.1.0      rmarkdown_1.10    modelr_0.1.2     
-## [34] magrittr_1.5      codetools_0.2-15  backports_1.1.2  
-## [37] scales_1.0.0      htmltools_0.3.6   rvest_0.3.2      
-## [40] assertthat_0.2.0  colorspace_1.3-2  labeling_0.3     
-## [43] stringi_1.2.4     lazyeval_0.2.1    munsell_0.5.0    
-## [46] broom_0.5.0       crayon_1.3.4
+##  [1] tidyselect_0.2.5  haven_1.1.2       lattice_0.20-35  
+##  [4] colorspace_1.3-2  htmltools_0.3.6   viridisLite_0.3.0
+##  [7] yaml_2.2.0        rlang_0.3.0.1     pillar_1.3.0     
+## [10] glue_1.3.0        withr_2.1.2       modelr_0.1.2     
+## [13] readxl_1.1.0      bindr_0.1.1       plyr_1.8.4       
+## [16] munsell_0.5.0     gtable_0.2.0      cellranger_1.1.0 
+## [19] rvest_0.3.2       codetools_0.2-15  evaluate_0.12    
+## [22] labeling_0.3      papaja_0.1.0.9842 highr_0.7        
+## [25] broom_0.5.0       Rcpp_1.0.0        scales_1.0.0     
+## [28] backports_1.1.2   jsonlite_1.5      hms_0.4.2        
+## [31] digest_0.6.18     stringi_1.2.4     grid_3.5.1       
+## [34] rprojroot_1.3-2   cli_1.0.1         tools_3.5.1      
+## [37] magrittr_1.5      lazyeval_0.2.1    crayon_1.3.4     
+## [40] pkgconfig_2.0.2   xml2_1.2.0        lubridate_1.7.4  
+## [43] assertthat_0.2.0  rmarkdown_1.10    httr_1.3.1       
+## [46] rstudioapi_0.8    R6_2.3.0          nlme_3.1-137     
+## [49] compiler_3.5.1
 ```
 
 
