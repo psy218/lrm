@@ -74,14 +74,14 @@ A full list of options available [here](https://yihui.name/knitr/options/).
 #### Useful tips & tricks  
 1. selective inclusion  
 
-    ```{r echo=3:5}`r ''`
-    library("tidyverse") #1
-    library("here") #2
-    x <- c("a", "b", "c") #3
-    y <- c(1:3) #4
-    cbind(x, y) #5
-    rm(x); rm(y) #6
-    ```
+    ```{r echo=3:5}`r ''`  
+    library("tidyverse") #1  
+    library("here") #2  
+    x <- c("a", "b", "c") #3  
+    y <- c(1:3) #4  
+    cbind(x, y) #5  
+    rm(x); rm(y) #6  
+    ```  
 
   `echo=3:5` only shows lines from 3 to 5
 ```{r echo=3:5}
