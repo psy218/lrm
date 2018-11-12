@@ -3,47 +3,35 @@ title: "rmarkdown"
 author: "Sue Song"
 date: '2018-11-04'
 output: 
+  github_document:
+    toc: true
+    toc_depth: 2
+    html_preview: false
   html_document: 
     toc: yes
     toc_float: true
     keep_md: true
     self_contained: no
-  github_document:
-    toc: true
-    toc_depth: 2
-    html_preview: false
   word_document: default
 editor_options:
   chunk_output_type: inline
 bibliography: [zotero_ref.bib]
 ---
 # R environment 
+
 ```{r global_options, message=FALSE, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, 
-                      warning=FALSE, 
+                      warning=FALSE,
                       message=FALSE, 
                       cache=TRUE,
                       highlight = TRUE,
                       fig.width = 8, 
-                      fig.height = 5,
-                      fig.show="hold")
-```
-
-```{r package_options, message=FALSE, include=FALSE}
-knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
-options(digits = 3, scipen = 10)
+                      fig.height = 5)
 ```
 
 ```{r library, message=FALSE, include=FALSE}
 library("tidyverse"); library("here"); library("knitr")
 ```
-
-# Prerequisite
-```{r}
-
-# devtools::install_github("crsh/prereg")
-```
-
 
 # Structure 
 ## 1. Header  
@@ -58,14 +46,6 @@ cat(yaml::as.yaml(list(
 )))
 ```
 
-Essential components:
-1. output format
-  + `html_document`
-  + `word_document`
-  + `pdf_document`
-  
-2. `bibliography`
-use [@R-base] 
 
 ## 2. Code chunks  
 ### Step 1. Insert code chunks
@@ -75,12 +55,25 @@ Keyboard shortcuts:
 
 ### Step 2. Define *chunk options*
 
-#### Options for the output documents
-A full list of options available [here](https://yihui.name/knitr/options/).
+#### Options for the output documents  
+A full list of options available [here](https://yihui.name/knitr/options/).  
 
-- `eval`: execute a code chunk?  
-- `echo`: include the source code in the output document?  
-  selective inclusion: e.g., `echo=3:5` 
+| chunk options     | description                                                  |
+|-------------------|--------------------------------------------------------------|
+| `eval`            | execute a code chunk?                                        |
+| `echo`            | include the code in the output document?                     |
+| `results`         | include the result of the code chunk in the output document?<br>use `asis` for reporting |
+| `warning`         | show warning messages in the output document?                |
+| `message`         | show console messages in the output document?                |
+| `include`         | show code & result in the output document? <br>equivalent to `echo=F, results='hide', warning=F, message=F`|
+| `cache`           | save the output of a code chunk?                             |  
+| `fig.width`       | figure width                                                 |
+| `fig.height`      | figure height                                                |
+
+
+#### Useful tips & tricks  
+1. selective inclusion  
+  e.g., `echo=3:5` 
 ```{r echo=3:5}
 library("tidyverse") #1
 library("here") #2
@@ -90,21 +83,11 @@ cbind(x, y) #5
 rm(x); rm(y) #6
 ```
 
-- `results`:  
-  `hide`: hide result in the text output?  
-  `asis`: 
-```{r results='asis'}
-cat("This is how results are written\n as is.")
-```
-- `warning`, `message`, `error`: show warnings and (error) messages in the output document?  
-- `include`: do not show in the output document (but still run the code chunk)  
-  equivalent to `echo=F, results='hide', warning=F, message=F`
-- `cache`: computations are saved to prevent re-running the code chunk (unless there are changes)  
-  `audodep`: if a code chunk that subsequent code chunks depend on changes 
+2. using `child` option
+```{r parent, child = "child.Rmd"}
 
-#### Options for the figures & plots  
-*`fig.width` and `fig.height` define plots in inches. 
-  +`fig.dim = c(6, 4)` is equivalent to  `fig.width=6, fig.height=4`
+```
+
 
 ### Step 3. Code away  
 #### Create a plot  
@@ -112,9 +95,7 @@ cat("This is how results are written\n as is.")
 plot(cars)
 ```
 
-As shown in \@ref(fig1), there is a relationship.
-
-APA-formatted Plot  
+#### APA-formatted Plot  
 ```{r apa_graph}
 ggplot(mtcars, aes(x = mpg, y = disp, colour = as.factor(mtcars$gear))) +
   geom_point() +
@@ -136,50 +117,67 @@ knitr::include_graphics(here("plot.png"))
 
 
 #### table  
-Using `knitr::kable`  
-```{r}
+Create a table using `knitr::kable` or `stargazer::stargazer`  
+```{r table1, results='asis'}
 mtcars %>%
   summarise(n = n(),
             disp_mean = mean(disp, na.rm = T),
             disp_sd = sd(disp, na.rm = T)) %>%
   as.tibble() %>%
-knitr::kable(booktabs = T,
-             caption="Summary Table",
-             digits = 2)
+  knitr::kable(caption="Summary Table", digits = 2)
+  # stargazer::stargazer(type="html", title = "Summary Table")
 ```
 
-Test statistics 
-```{r}
+
+
+
+Tables for test statistics 
+```{r table2, results='asis'}
 knitr::kable(coef(summary(lm(disp ~ wt*as.factor(gear),
                              data = mtcars))),
-             digits = 2)
+             format = "markdown", digits = 2)
 ```
 
-```{r}
-knitr::kable(broom::tidy(lm(disp ~ wt*as.factor(gear),
-                             data = mtcars)),
-             digits = 3)
+
+#### sourcing an external .R script
+```{r external_r, cache=FALSE}
+knitr::read_chunk(here::here("data_analysis", "data_cleaning.R"))
 ```
 
-## Text paragraphs
+
+## 3. Text paragraphs  
 
 ### inline formatting  
+
 [Basic formatting](https://rmarkdown.rstudio.com/authoring_basics.html)  
+[Cheetsheat](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
-#### equation  
-```{r}
-summary(lm.fit <- lm(disp ~ as.factor(gear)*wt,
-                     data = mtcars))
+#### extracting test statistics
+|                 | r code                           |
+|-----------------|----------------------------------|
+| coefficients    | `summary(fit)$coefficients[ ,1]` |
+| Standard errors | `summary(fit)$coefficients[ ,2]` |
+| test statistics | `summary(fit)$coefficients[ ,3]` |
+| p-values        | `summary(fit)$coefficients[ ,4]` |
+| R squared       | `summary(fit)$r.squared`         |
+
+
+#### Example  
+$y_{ij}$ = $\beta_0 + \beta_1 MPG + \beta_2WT + \beta_3MPG*WT + e$   
+
+Step 1. Run and save your analysis  
+```{r table3, results='asis'}
+knitr::kable(broom::tidy(summary(lm.fit <- lm(disp ~ mpg*wt,
+                     data = mtcars))), 
+             format = "markdown", digits = 3)
 ```
-$y_{ij}$ = $\beta_0 + \beta_1 age + e$ 
 
-...a positive slope, $\beta$ = `r round(coef(lm.fit)[4],2)`, $p$ = `r round(coef(summary(lm.fit))[4, 4],2)`
+Step 2. Use `summary(fit)$coefficients` to extract information
+- coefficients & p-values
+  ...a negative slope of MPG, $\beta$ = `r round(summary(lm.fit)$coefficients[2, 1], 2)`, $p$ = `r round(summary(lm.fit)$coefficients[2, 4], 2)`.  
 
-r-squared:
-$R^2$
-
-chi-square: 
-$\chi^2$ 
+- r-squared:  
+  $R^2$ = `r summary(lm.fit)$r.squared`.  
 
 For more LaTex [math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html)
 
@@ -189,53 +187,63 @@ For more LaTex [math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.ht
 > --- scholars
 
 #### footnote
-^[1]
-^[] This is where a foot notes.
+A footnote [^1]  
+[^1]: This is where a foot notes. 
 
 
 ### Citing references  
-
-1. Add the following lines in the YAML header:
----
-`bibliography: reference.bib`
-`csl: apa.csl`
----
-
-2. cite away  
-#### formatting   
-* in-text citation
-... @joel_wanting_2017 [p. 33]
-
-* multiple citations separated by a `;`
-...[see @baldwin_relational_1992; also @joel_wanting_2017]
-
-* removing author names by putting `-`
-...joel [-@joel_wanting_2017]
-
-#### citr add-in  
-```{r}
+#### Useful tools  
+1. citr add-in  
+```{r citr}
 # install.packages("citr")
 options(citr.use_betterbiblatex = T)
 ```
 
-#### papja  
-Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
+2. papja    
+  Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
 
-Step 2. `papaja::r_refs` to create a bib file   
-  +.bib file will include citations for R and R packages used in the session. 
-```{r}
-papaja::r_refs(file = "zotero_ref.bib")
+  Step 2. `papaja::r_refs` to create a bib file   
+    + .bib file will include citations for R and R packages used in the session. 
+```{r references}
+papaja::r_refs(file = "zotero_ref.bib", append = T)
 ```
 
-Step 3. `papja::cite_r` to translate them into human-readable citations  
-```{r}
+  Step 3. `papja::cite_r` to translate them into human-readable citations  
+```{r ref_package}
 citations <- papaja::cite_r(file=here("workflow", "zotero_ref.bib")
-                    #, pkgs = c("papaja", "here") 
+                    #, pkgs = c("papaja", "here")
                     #, withhold = F
                     #, footnote = T
                     )
 ```
 I used `r citations` for the data analysis.
+
+#### Step-by-step  
+1. Add the .bib file in the same folder as the .Rmd file  
+
+2. Add the following lines in the YAML header:  
+```{r eval=FALSE}
+---
+`bibliography: reference.bib`  
+`csl: apa.csl`
+---
+```
+
+3. cite away using **citation keys** (optional: with citr addin)  
+  - in-line citation
+    ... @joel_wanting_2017 [p. 33]
+
+  - multiple citations separated by a `;`  
+    ...[see @baldwin_relational_1992; also @joel_wanting_2017]
+
+  - removing author names by putting a minus sign, `-`  
+    ...joel [-@joel_wanting_2017]
+
+### Reproducibility
+
+```{r}
+print(sessionInfo(), locale = FALSE)
+```
 
 
 \newpage
