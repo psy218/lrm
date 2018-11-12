@@ -131,13 +131,6 @@ broom::tidy(model.fit <- glm(profile_num ~ promotion + prevention,
   knitr::kable(caption = "Table 1. Model fit", digits = 3)
 ```
 
-### more details
-```{r}
-library(DT)
-head(broom::augment(model.fit)) %>% 
-  datatable
-```
-
 ### plot
 ```{r plot, echo=4:10}
 condition_label <- c(
