@@ -3,15 +3,15 @@ title: "rmarkdown"
 author: "Sue Song"
 date: '2018-11-04'
 output: 
-  github_document:
-    toc: true
-    toc_depth: 2
-    html_preview: false
   html_document: 
     toc: yes
     toc_float: true
     keep_md: true
     self_contained: no
+  github_document:
+    toc: true
+    toc_depth: 2
+    html_preview: false
   word_document: default
 editor_options:
   chunk_output_type: inline
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo=TRUE,
                       warning=FALSE,
                       message=FALSE, 
                       cache=TRUE,
-                      highlight = "tango",
+                      highlight = TRUE,
                       fig.width = 8, 
                       fig.height = 5)
 ```
@@ -73,16 +73,6 @@ A full list of options available [here](https://yihui.name/knitr/options/).
 
 #### Useful tips & tricks  
 1. selective inclusion  
-
-    ```{r echo=3:5}`r ''`  
-    library("tidyverse") #1  
-    library("here") #2  
-    x <- c("a", "b", "c") #3  
-    y <- c(1:3) #4  
-    cbind(x, y) #5  
-    rm(x); rm(y) #6  
-    ```  
-
   `echo=3:5` only shows lines from 3 to 5
 ```{r echo=3:5}
 library("tidyverse") #1
@@ -138,7 +128,7 @@ knitr::include_graphics(here("plot.png"))
 
 
 #### Table  
-Create a table using `knitr::kable` or `stargazer::stargazer`  
+Create a table using `knitr::kable` 
 ```{r table1, results='asis'}
 mtcars %>%
   summarise(n = n(),
@@ -146,15 +136,6 @@ mtcars %>%
             disp_sd = sd(disp, na.rm = T)) %>%
   as.tibble() %>%
   knitr::kable(caption="Summary Table", digits = 2)
-```
-<br>
-```{r, results="asis"}
-mtcars %>%
-  summarise(n = n(),
-            disp_mean = mean(disp, na.rm = T),
-            disp_sd = sd(disp, na.rm = T)) %>%
-  as.tibble() %>%
-  stargazer::stargazer(type="html", title = "Summary Table")
 ```
 
 ##### Tables for test statistics 
@@ -166,7 +147,7 @@ knitr::kable(coef(summary(lm(disp ~ wt*as.factor(gear),
 
 
 #### Sourcing an external .R script
-```{r external_r, cache=FALSE}
+```{r external_r, eval=FALSE, cache=FALSE, echo=TRUE}
 knitr::read_chunk(here::here("data_analysis", "data_cleaning.R"))
 ```
 
@@ -180,13 +161,6 @@ knitr::read_chunk(here::here("data_analysis", "data_cleaning.R"))
 [LaTex math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html)  
 
 #### extracting test statistics
-|                   | r code                           | output                                |
-|-------------------|----------------------------------|---------------------------------------|
-| *coefficients*    | `summary(fit)$coefficients[ ,1]` | `r summary(lm.fit)$coefficients[2, 1]`|
-| *Standard errors* | `summary(fit)$coefficients[ ,2]` | `r summary(lm.fit)$coefficients[2, 2]`|
-| *test statistics* | `summary(fit)$coefficients[ ,3]` | `r summary(lm.fit)$coefficients[2, 3]`|
-| *p-values*        | `summary(fit)$coefficients[ ,4]` | `r summary(lm.fit)$coefficients[2, 4]`| 
-| *R squared*       | `summary(fit)$r.squared`         | `r summary(lm.fit)$r.squared`         |
 
 
 #### Example  
@@ -199,9 +173,19 @@ knitr::kable(broom::tidy(summary(lm.fit <- lm(disp ~ mpg*wt,
              format = "markdown", digits = 3)
 ```
 
+
+|                     | r code                           | output                                |
+|---------------------|----------------------------------|---------------------------------------|
+| **coefficients**    | `summary(fit)$coefficients[ ,1]` | `r summary(lm.fit)$coefficients[2, 1]`|
+| **Standard errors** | `summary(fit)$coefficients[ ,2]` | `r summary(lm.fit)$coefficients[2, 2]`|
+| **test statistics** | `summary(fit)$coefficients[ ,3]` | `r summary(lm.fit)$coefficients[2, 3]`|
+| **p-values**        | `summary(fit)$coefficients[ ,4]` | `r summary(lm.fit)$coefficients[2, 4]`| 
+| **R squared**       | `summary(fit)$r.squared`         | `r summary(lm.fit)$r.squared`         |
+
+
 Step 2. Use `summary(fit)$coefficients` to extract information   
-<br>
-- coefficients & p-values
+<br>  
+- coefficients & p-values  
   ...a negative slope of MPG, $\beta$ = `r round(summary(lm.fit)$coefficients[2, 1], 2)`, $p$ = `r round(summary(lm.fit)$coefficients[2, 4], 2)`.  
 
 - r-squared:  
@@ -245,7 +229,7 @@ csl: apa.csl
 ---
 ```
 
-3. cite away using **citation keys** (optional: with citr addin)  
+3. cite away using *citation keys* (optional: with citr addin)  
 - in-line citation  
   ... @joel_wanting_2017 [p. 33] did things
 
