@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo=TRUE,
                       warning=FALSE,
                       message=FALSE, 
                       cache=TRUE,
-                      highlight = TRUE,
+                      highlight = "tango",
                       fig.width = 8, 
                       fig.height = 5)
 ```
@@ -177,19 +177,20 @@ knitr::read_chunk(here::here("data_analysis", "data_cleaning.R"))
 
 [Basic formatting](https://rmarkdown.rstudio.com/authoring_basics.html)  
 [Cheetsheat](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+[LaTex math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html)  
 
 #### extracting test statistics
-|                   | r code                           |
-|-------------------|----------------------------------|
-| *coefficients*    | `summary(fit)$coefficients[ ,1]` |
-| *Standard errors* | `summary(fit)$coefficients[ ,2]` |
-| *test statistics* | `summary(fit)$coefficients[ ,3]` |
-| *p-values*        | `summary(fit)$coefficients[ ,4]` |
-| *R squared*       | `summary(fit)$r.squared`         |
+|                   | r code                           | output                                |
+|-------------------|----------------------------------|---------------------------------------|
+| *coefficients*    | `summary(fit)$coefficients[ ,1]` | `r summary(lm.fit)$coefficients[2, 1]`|
+| *Standard errors* | `summary(fit)$coefficients[ ,2]` | `r summary(lm.fit)$coefficients[2, 2]`|
+| *test statistics* | `summary(fit)$coefficients[ ,3]` | `r summary(lm.fit)$coefficients[2, 3]`|
+| *p-values*        | `summary(fit)$coefficients[ ,4]` | `r summary(lm.fit)$coefficients[2, 4]`| 
+| *R squared*       | `summary(fit)$r.squared`         | `r summary(lm.fit)$r.squared`         |
 
 
 #### Example  
-$$y_{ij}$ = $\beta_0 + \beta_1 MPG + \beta_2WT + \beta_3MPG*WT + e$$  
+$y_{ij}$ = $\beta_0 + \beta_1 MPG + \beta_2WT + \beta_3MPG*WT + e$
 
 Step 1. Run and save your analysis  
 ```{r table3, results='asis'}
@@ -198,23 +199,13 @@ knitr::kable(broom::tidy(summary(lm.fit <- lm(disp ~ mpg*wt,
              format = "markdown", digits = 3)
 ```
 
-Step 2. Use `summary(fit)$coefficients` to extract information  
+Step 2. Use `summary(fit)$coefficients` to extract information   
+<br>
 - coefficients & p-values
   ...a negative slope of MPG, $\beta$ = `r round(summary(lm.fit)$coefficients[2, 1], 2)`, $p$ = `r round(summary(lm.fit)$coefficients[2, 4], 2)`.  
 
 - r-squared:  
   $R^2$ = `r summary(lm.fit)$r.squared`.  
-
-For more LaTex [math symbols](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html)
-
-#### block quote
-> ...As this pseudo-workshop dragged on, the scholars have struggled to sit through the talk. People wondered, when is this misery going to end?
->
-> --- scholars
-
-#### footnote
-A footnote [^1]  
-[^1]: This is where a foot notes. 
 
 
 ### Citing references  
@@ -226,14 +217,14 @@ options(citr.use_betterbiblatex = T)
 ```
 
 2. papja    
-  - Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
-  - Step 2. `papaja::r_refs` to create a bib file   
-    + .bib file will include citations for R and R packages used in the session. 
+- Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
+- Step 2. `papaja::r_refs` to create a bib file   
+  + .bib file will include citations for R and R packages used in the session.  
 ```{r references}
 papaja::r_refs(file = "zotero_ref.bib", append = T)
 ```
 
-  - Step 3. `papja::cite_r` to translate them into human-readable citations  
+- Step 3. `papja::cite_r` to translate them into human-readable citations  
 ```{r ref_package}
 citations <- papaja::cite_r(file=here("workflow", "zotero_ref.bib")
                     #, pkgs = c("papaja", "here")
@@ -255,14 +246,14 @@ csl: apa.csl
 ```
 
 3. cite away using **citation keys** (optional: with citr addin)  
-  - in-line citation  
-    ... @joel_wanting_2017 [p. 33] did things
+- in-line citation  
+  ... @joel_wanting_2017 [p. 33] did things
 
-  - multiple citations separated by a *`;`*  
-    ...[see @baldwin_relational_1992; also @joel_wanting_2017]
+- multiple citations separated by a **`;`**  
+  ... [see @baldwin_relational_1992; also @joel_wanting_2017]
 
-  - removing author names by putting a minus sign, *`-`*  
-    ...Joel [-@joel_wanting_2017] did things  
+- removing author names by putting a minus sign, **`-`**  
+  ... Joel [-@joel_wanting_2017] did things  
 
 ### Reproducibility
 
