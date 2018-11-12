@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo=TRUE,
                       warning=FALSE,
                       message=FALSE, 
                       cache=TRUE,
-                      highlight = "tango",
+                      highlight = TRUE,
                       fig.width = 8, 
                       fig.height = 5)
 ```
