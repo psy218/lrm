@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo=TRUE,
                       warning=FALSE,
                       message=FALSE, 
                       cache=TRUE,
-                      highlight = TRUE,
+                      highlight = "tango",
                       fig.width = 8, 
                       fig.height = 5)
 ```
@@ -73,8 +73,9 @@ A full list of options available [here](https://yihui.name/knitr/options/).
 
 #### Useful tips & tricks  
 1. selective inclusion  
-  `echo=3:5` only shows lines from 3 to 5
-```{r echo=3:5}
+
+`echo=3:5` only shows lines from 3 to 5  
+```{r echo=3:5, results="hide"}
 library("tidyverse") #1
 library("here") #2
 x <- c("a", "b", "c") #3
@@ -83,8 +84,8 @@ cbind(x, y) #5
 rm(x); rm(y) #6
 ```
 
-  `echo=c(1, 3)` only shows the first and third lines
-```{r echo=c(1, 3)}
+`echo=c(1, 3)` only shows the first and third lines  
+```{r echo=c(1, 3), results="hide"}
 library("tidyverse") #1
 library("here") #2
 x <- c("a", "b", "c") #3
@@ -94,7 +95,8 @@ rm(x); rm(y) #6
 ```
 
 
-2. using `child` option
+2. using `child` option  
+Specify which child document you want the following code chunk should be: `child = "child-doc.Rmd"`  
 ```{r parent, child = "child.Rmd"}
 
 ```
@@ -174,6 +176,8 @@ knitr::kable(broom::tidy(summary(lm.fit <- lm(disp ~ mpg*wt,
 ```
 
 
+Step 2. Use `summary(fit)$coefficients` to extract information   
+
 |                     | r code                           | output                                |
 |---------------------|----------------------------------|---------------------------------------|
 | **coefficients**    | `summary(fit)$coefficients[ ,1]` | `r summary(lm.fit)$coefficients[2, 1]`|
@@ -183,9 +187,7 @@ knitr::kable(broom::tidy(summary(lm.fit <- lm(disp ~ mpg*wt,
 | **R squared**       | `summary(fit)$r.squared`         | `r summary(lm.fit)$r.squared`         |
 
 
-Step 2. Use `summary(fit)$coefficients` to extract information   
-<br>  
-- coefficients & p-values  
+- coefficients & p-values:  
   ...a negative slope of MPG, $\beta$ = `r round(summary(lm.fit)$coefficients[2, 1], 2)`, $p$ = `r round(summary(lm.fit)$coefficients[2, 4], 2)`.  
 
 - r-squared:  
