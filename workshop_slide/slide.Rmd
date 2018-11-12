@@ -62,7 +62,7 @@ A full list of options available [here](https://yihui.name/knitr/options/).
 |-------------------|--------------------------------------------------------------|
 | `eval`            | execute a code chunk?                                        |
 | `echo`            | include the code in the output document?                     |
-| `results`         | include the result of the code chunk in the output document?<br>use `asis` for reporting |
+| `results`         | include the result of the code chunk in the output document?<br>use `results="asis"` for reporting<br>use `results="hide"` to hide the results|
 | `warning`         | show warning messages in the output document?                |
 | `message`         | show console messages in the output document?                |
 | `include`         | show code & result in the output document? <br>equivalent to `echo=F, results='hide', warning=F, message=F`|
@@ -73,7 +73,17 @@ A full list of options available [here](https://yihui.name/knitr/options/).
 
 #### Useful tips & tricks  
 1. selective inclusion  
-  e.g., `echo=3:5` 
+
+    ```{r echo=3:5}`r ''`
+    library("tidyverse") #1
+    library("here") #2
+    x <- c("a", "b", "c") #3
+    y <- c(1:3) #4
+    cbind(x, y) #5
+    rm(x); rm(y) #6
+    ```
+
+  `echo=3:5` only shows lines from 3 to 5
 ```{r echo=3:5}
 library("tidyverse") #1
 library("here") #2
@@ -83,6 +93,17 @@ cbind(x, y) #5
 rm(x); rm(y) #6
 ```
 
+  `echo=c(1, 3)` only shows the first and third lines
+```{r echo=c(1, 3)}
+library("tidyverse") #1
+library("here") #2
+x <- c("a", "b", "c") #3
+y <- c(1:3) #4
+cbind(x, y) #5
+rm(x); rm(y) #6
+```
+
+
 2. using `child` option
 ```{r parent, child = "child.Rmd"}
 
@@ -90,12 +111,12 @@ rm(x); rm(y) #6
 
 
 ### Step 3. Code away  
-#### Create a plot  
+#### Plot  
 ```{r fig1}
 plot(cars)
 ```
 
-#### APA-formatted Plot  
+##### APA-formatted Plot  
 ```{r apa_graph}
 ggplot(mtcars, aes(x = mpg, y = disp, colour = as.factor(mtcars$gear))) +
   geom_point() +
@@ -110,13 +131,13 @@ ggsave("plot.png", width = 8, height = 5)
 # unlink("plot.png")
 ```
 
-(Optional) Import a figure
+*Or* import a figure from your local storage
 ```{r}
 knitr::include_graphics(here("plot.png"))
 ```
 
 
-#### table  
+#### Table  
 Create a table using `knitr::kable` or `stargazer::stargazer`  
 ```{r table1, results='asis'}
 mtcars %>%
@@ -125,21 +146,26 @@ mtcars %>%
             disp_sd = sd(disp, na.rm = T)) %>%
   as.tibble() %>%
   knitr::kable(caption="Summary Table", digits = 2)
-  # stargazer::stargazer(type="html", title = "Summary Table")
+```
+<br>
+```{r, results="asis"}
+mtcars %>%
+  summarise(n = n(),
+            disp_mean = mean(disp, na.rm = T),
+            disp_sd = sd(disp, na.rm = T)) %>%
+  as.tibble() %>%
+  stargazer::stargazer(type="html", title = "Summary Table")
 ```
 
-
-
-
-Tables for test statistics 
+##### Tables for test statistics 
 ```{r table2, results='asis'}
 knitr::kable(coef(summary(lm(disp ~ wt*as.factor(gear),
                              data = mtcars))),
-             format = "markdown", digits = 2)
+             format = "html", digits = 2)
 ```
 
 
-#### sourcing an external .R script
+#### Sourcing an external .R script
 ```{r external_r, cache=FALSE}
 knitr::read_chunk(here::here("data_analysis", "data_cleaning.R"))
 ```
@@ -153,17 +179,17 @@ knitr::read_chunk(here::here("data_analysis", "data_cleaning.R"))
 [Cheetsheat](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
 #### extracting test statistics
-|                 | r code                           |
-|-----------------|----------------------------------|
-| coefficients    | `summary(fit)$coefficients[ ,1]` |
-| Standard errors | `summary(fit)$coefficients[ ,2]` |
-| test statistics | `summary(fit)$coefficients[ ,3]` |
-| p-values        | `summary(fit)$coefficients[ ,4]` |
-| R squared       | `summary(fit)$r.squared`         |
+|                   | r code                           |
+|-------------------|----------------------------------|
+| *coefficients*    | `summary(fit)$coefficients[ ,1]` |
+| *Standard errors* | `summary(fit)$coefficients[ ,2]` |
+| *test statistics* | `summary(fit)$coefficients[ ,3]` |
+| *p-values*        | `summary(fit)$coefficients[ ,4]` |
+| *R squared*       | `summary(fit)$r.squared`         |
 
 
 #### Example  
-$y_{ij}$ = $\beta_0 + \beta_1 MPG + \beta_2WT + \beta_3MPG*WT + e$   
+$$y_{ij}$ = $\beta_0 + \beta_1 MPG + \beta_2WT + \beta_3MPG*WT + e$$  
 
 Step 1. Run and save your analysis  
 ```{r table3, results='asis'}
@@ -172,7 +198,7 @@ knitr::kable(broom::tidy(summary(lm.fit <- lm(disp ~ mpg*wt,
              format = "markdown", digits = 3)
 ```
 
-Step 2. Use `summary(fit)$coefficients` to extract information
+Step 2. Use `summary(fit)$coefficients` to extract information  
 - coefficients & p-values
   ...a negative slope of MPG, $\beta$ = `r round(summary(lm.fit)$coefficients[2, 1], 2)`, $p$ = `r round(summary(lm.fit)$coefficients[2, 4], 2)`.  
 
@@ -200,15 +226,14 @@ options(citr.use_betterbiblatex = T)
 ```
 
 2. papja    
-  Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
-
-  Step 2. `papaja::r_refs` to create a bib file   
+  - Step 1. export a bib file from your reference manager (e.g., Mendeley, Zotero)  
+  - Step 2. `papaja::r_refs` to create a bib file   
     + .bib file will include citations for R and R packages used in the session. 
 ```{r references}
 papaja::r_refs(file = "zotero_ref.bib", append = T)
 ```
 
-  Step 3. `papja::cite_r` to translate them into human-readable citations  
+  - Step 3. `papja::cite_r` to translate them into human-readable citations  
 ```{r ref_package}
 citations <- papaja::cite_r(file=here("workflow", "zotero_ref.bib")
                     #, pkgs = c("papaja", "here")
@@ -218,26 +243,26 @@ citations <- papaja::cite_r(file=here("workflow", "zotero_ref.bib")
 ```
 I used `r citations` for the data analysis.
 
-#### Step-by-step  
+#### Citing step-by-step  
 1. Add the .bib file in the same folder as the .Rmd file  
 
 2. Add the following lines in the YAML header:  
 ```{r eval=FALSE}
 ---
-`bibliography: reference.bib`  
-`csl: apa.csl`
+bibliography: reference.bib
+csl: apa.csl
 ---
 ```
 
 3. cite away using **citation keys** (optional: with citr addin)  
-  - in-line citation
-    ... @joel_wanting_2017 [p. 33]
+  - in-line citation  
+    ... @joel_wanting_2017 [p. 33] did things
 
-  - multiple citations separated by a `;`  
+  - multiple citations separated by a *`;`*  
     ...[see @baldwin_relational_1992; also @joel_wanting_2017]
 
-  - removing author names by putting a minus sign, `-`  
-    ...joel [-@joel_wanting_2017]
+  - removing author names by putting a minus sign, *`-`*  
+    ...Joel [-@joel_wanting_2017] did things  
 
 ### Reproducibility
 
