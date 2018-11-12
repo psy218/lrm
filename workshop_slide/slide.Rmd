@@ -49,8 +49,8 @@ cat(yaml::as.yaml(list(
 
 ## 2. Code chunks  
 ### Step 1. Insert code chunks
-Keyboard shortcuts:
-- Ctrl + Alt + I (Windows)
+Keyboard shortcuts:  
+- Ctrl + Alt + I (Windows)  
 - Cmd + Option + I (Mac)
 
 ### Step 2. Define *chunk options*
