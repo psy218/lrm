@@ -1,0 +1,17 @@
+---
+title: "child_doc"
+author: "Sue Song"
+date: '2018-11-12'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an example plot from a child document.  
+```{r}
+library(ggplot2)
+qplot(carat, price, colour = cut, data = diamonds)
+```
+
