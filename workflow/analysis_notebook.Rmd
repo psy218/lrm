@@ -33,13 +33,13 @@ library("tidyverse"); library("broom"); library("ggplot2"); library("here")
 ```
 
 For reproducibility, two options for recording packages used:  
-a) using `checkpoint` package
+1. using `checkpoint` package
 ```{r checkpoint, message=FALSE}
 checkpoint::checkpoint(Sys.Date()) # create a snapshot folder for all the install pakges
 getOption("repos") # check that the CRAN mirror set to MRAN snapshot
 ```
-
-b) Record session informations using `sessionInfo()`  
+  
+2. Record session informations using `sessionInfo()`  
 ```{r}
 print(sessionInfo(), locale = FALSE)
 ```
@@ -131,7 +131,7 @@ broom::tidy(model.fit <- glm(profile_num ~ promotion + prevention,
   knitr::kable(caption = "Table 1. Model fit", digits = 3)
 ```
 
-### plot
+### Plot
 ```{r plot, echo=4:10}
 condition_label <- c(
   `-1` = "Undesirable-trait strategy",

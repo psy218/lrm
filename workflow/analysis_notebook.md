@@ -8,7 +8,7 @@ Sue Song
 This won’t be shown in your document
 
 For reproducibility, two options for recording packages used:  
-a) using `checkpoint`
+1\. using `checkpoint`
 package
 
 ``` r
@@ -19,7 +19,7 @@ getOption("repos") # check that the CRAN mirror set to MRAN snapshot
     ##     CRAN 
     ## "@CRAN@"
 
-2)  Record session informations using `sessionInfo()`
+2.  Record session informations using `sessionInfo()`
 
 <!-- end list -->
 
@@ -211,6 +211,6 @@ broom::tidy(model.fit <- glm(profile_num ~ promotion + prevention,
 
 Table 1. Model fit
 
-### plot
+### Plot
 
 ![](analysis_notebook_files/figure-gfm/plot-1.png)<!-- -->
