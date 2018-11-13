@@ -32,7 +32,15 @@ options(digits = 3, scipen = 1)
 library("tidyverse"); library("broom"); library("ggplot2"); library("here")
 ```
 
-For reproducibility, two options for recording packages used:  
+
+# For reproducibility:
+## setting seed
+```{r seed}
+# set.seed(123456)
+```
+
+## package control
+two options for recording packages used:  
 1. using `checkpoint` package
 ```{r checkpoint, message=FALSE}
 checkpoint::checkpoint(Sys.Date()) # create a snapshot folder for all the install pakges
@@ -40,7 +48,7 @@ getOption("repos") # check that the CRAN mirror set to MRAN snapshot
 ```
   
 2. Record session informations using `sessionInfo()`  
-```{r}
+```{r session, cache=TRUE}
 print(sessionInfo(), locale = FALSE)
 ```
 
