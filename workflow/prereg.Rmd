@@ -1,0 +1,286 @@
+---
+title           : "Regulatory Fit in Online Dating"
+shorttitle      : "RFQ Study 3"
+date            : "`r Sys.setlocale('LC_TIME', 'C'); format(Sys.time(), '%d\\\\. %B %Y')`"
+
+author: 
+  - name        : su so
+    affiliation : 1
+
+affiliation:
+  - id          : 1
+    institution : UofT
+
+output: prereg::cos_prereg
+---
+
+```{r chunk_option, include = FALSE}
+## Set global chunk options
+knitr::opts_chunk$set(echo = FALSE, # make sure this is false 
+                      warning = FALSE, 
+                      message = FALSE,
+                      cache = TRUE,
+                      include = FALSE,
+                      fig.width = 8,
+                      fig.height = 5)
+```
+
+```{r library, include=FALSE, message=FALSE}
+## Load packages
+library("tidyverse"); library("broom"); library("here")
+```
+
+# Study Information
+
+## Title
+<!-- Provide the working title of your study. It may be the same title that you submit for publication of your final manuscript, but it is not a requirement. -->
+
+`r rmarkdown::metadata$title`
+
+
+## Research questions
+<!-- Please list each research question included in this study. -->
+
+1)	What is the factor structure of regulatory fit outcome measure? 
+We will examine the measurement model of the regulatory fit outcome we created in our previous study (https://osf.io/3ynht/). In the previous study, we conducted a factor analysis to examine whether the factor structure corresponds to our proposed structure (pre-registration form: https://osf.io/8w2rg/) and made few revisions to improve its structural validity. We will conduct a confirmatory factor analysis of the revised measurement model with a new sample.  
+
+2)	Do people experience regulatory fit when using a profile browsing strategy that matches their chronic regulatory focus? That is, does using a compatible strategy increase engagement and ease of online dating, which in turn increase perceived future success and positive evaluation of potential partners in online dating? 
+
+## Hypotheses
+<!-- For each of the research questions listed in the previous section, provide one or multiple specific and testable hypotheses. Please state if the hypotheses are directional or non-directional. If directional, state the direction. A predicted effect is also appropriate here. Providing a short name for each hypothesis (e.g. H1, H2, etc.) will later allow you to easily relate your hypotheses to statistical tests in your analysis plan. -->
+
+1)	The measurement model for regulatory fit indices and outcomes as four latent variables (i.e., engagement, ease, perceived future success, & positive partner evaluation) will have a good fit.   
+<br>
+
+2)	When using a compatible strategy, regulatory focus will predict the levels of engagement and ease of browsing profiles, which in turn predict perceived success of using online dating.   
+2a) In desirable condition, promotion focus will positively predict perceived success.   
+2b) In undesirable condition, prevention focus will positively predict perceived success and partner evaluation.
+3)	The associations between regulatory focus and regulatory fit outcomes (i.e., perceived success and partner evaluation) will be mediated by the indirect effects through engagement and ease.    
+3a) In desirable condition, promotion focus will be associated with engagement and ease, which in turn predict perceived success and partner evaluation.   
+3b) In undesirable condition, prevention focus will be associated with engagement and ease, which in turn predict perceived success and partner evaluation.  
+
+
+# Sampling Plan
+<!-- Please describe how you plan to collect samples, as well as the number of samples you plan to collect and your rationale for this decision. Keep in mind that the data described in this section should be the actual data used for analysis, so if you are using a subset of a larger dataset, please describe the subset that will actually be used in your study. -->
+
+
+## Existing data
+<!-- Preregistration is designed to make clear the distinction between confirmatory tests, specified prior to seeing the data, and exploratory analyses conducted after observing the data. Therefore, creating a research plan in which existing data will be used presents unique challenges. Please select the description that best describes your situation. Please do not hesitate to contact the Center for Open Science if you have questions about how to answer this questions (prereg@cos.io). -->
+
+**Registration prior to creation of data**. As of the date of submission of this research plan for preregistration, the data have not yet been collected, created, or realized.
+
+
+## Explanation of existing data
+<!-- If you indicate that you will be using some data that already exist in this study, please describe the steps you have taken to assure that you are unaware of any patterns or summary statistics in the data. This may include an explanation of how access to the data has been limited, who has observed the data, or how you have avoided observing any analysis of the specific data you will use in your study. The purpose of this question is to assure that the line between confirmatory and exploratory analysis is clear. -->
+
+N/A
+
+
+## Data collection procedures
+<!-- Please describe the process by which you will collect your data. If you are using human subjects, this should include the population from which you obtain subjects, recruitment efforts, payment for participation, how subjects will be selected for eligibility from the initial pool (e.g. inclusion and exclusion rules), and your study timeline. For studies that don't include human subjects, include information about how you will collect samples, duration of data gathering efforts, source or location of samples, or batch numbers you will use. -->
+
+Data will be collected through a crowd-sourcing website, [Prolific](https://prolific.ac/). Participants will receive a payment of $3 for their participation in a 30-minute survey. We will make our study available only to those who have not participated in our previous studies on online dating strategy.
+
+We will recruit those who meet the following eligibility criteria:
+1. Has an active account with one of the following dating websites: OkCupid, Plenty of Fish, & eHarmony
+-	These websites were selected as they are more amenable to strategy use, in that individuals may report a variety of traits that could be classified as undesirable or desirable (e.g., personality traits, pet ownership, alcohol use, etc.).   
+2. Resides in Canada or the US  
+3. Has not participated in our previous study  
+
+
+## Sample size
+<!-- Describe the sample size of your study. How many units will be analyzed in the study? This could be the number of people, birds, classrooms, plots, interactions, or countries included. If the units are not individuals, then describe the size requirements for each unit. If you are using a clustered or multilevel design, how many units are you collecting at each level of the analysis? -->
+
+A total of 300 eligible participants will be recruited. 
+
+
+## Sample size rationale
+<!-- This could include a power analysis or an arbitrary constraint such as time, money, or personnel. -->
+```{r power}
+# source(here::here("preregistration", "power_analysis"))
+```
+
+Sample size was determined based on the observed effect size to detect a moderation effect (f2 = 0.059).
+
+
+## Stopping rule
+<!-- If your data collection procedures do not give you full control over your exact sample size, specify how you will decide when to terminate your data collection. -->
+
+Data collection will terminate upon meeting the targeted sample size (i.e., 300 eligible participants).
+
+
+# Variables
+<!-- In this section you can describe all variables (both manipulated and measured variables) that will later be used in your confirmatory analysis plan. In your analysis plan, you will have the opportunity to describe how each variable will be used. If you have variables which you are measuring for exploratory analyses, you are not required to list them, though you are permitted to do so. -->
+
+
+## Manipulated variables
+<!-- Describe all variables you plan to manipulate and the levels or treatment arms of each variable. For observational studies and meta-analyses, simply state that this is not applicable. -->
+
+*Profile scanning condition*  
+Participants will be randomly assigned to use either a desirable-trait scanning strategy or an undesirable-trait scanning strategy. 
+
+
+## Measured variables
+<!-- Describe each variable that you will measure. This will include outcome measures, as well as any predictors or covariates that you will measure. You do not need to include any variables that you plan on collecting if they are not going to be included in the confirmatory analyses of this study. -->
+
+1. Chronic regulatory focus
+  -	Promotion focus
+  -	Prevention focus
+2. Regulatory fit indices
+  -	Engagement while viewing profiles
+  -	Ease while viewing profiles
+3. Regulatory fit outcomes
+  -	Perceived success
+  -	Evaluation of potential partners 
+
+
+## Indices
+<!-- If any measurements are  going to be combined into an index (or even a mean), what measures will you use and how will they be combined? Include either a formula or a precise description of your method. If your are using a more complicated statistical method to combine measures (e.g. a factor analysis), you can note that here but describe the exact method in the analysis plan section. -->
+
+Two regulatory fit indices (i.e., engagement and ease of browsing online dating profiles) and two regulatory fit outcomes (i.e., perceived success and partner evaluation) will be represented as latent variables with the measured items (see attached the questionnaire for the full list of items). To improve the model fit, we will first examine the interitem correlations of measured variables for each latent variable and drop items with low factor loadings (i.e., r < .30; Tabachnick & Fidell, 2015). 
+
+
+# Design Plan
+<!-- In this section, you will be asked to describe the overall design of your study. Remember that this research plan is designed to register a single study, so if you have multiple experimental designs, please complete a separate preregistration. -->
+
+
+## Study type
+
+**Experiment**. 
+
+
+## Blinding
+<!-- Blinding describes who is aware of the experimental manipulations within a study. Mark all that apply. -->
+
+No blinding is involved in this study.
+
+<!-- For studies that involve human subjects, they will not know the treatment group to which they have been assigned.
+
+Personnel who interact directly with the study subjects (either human or non-human subjects) will not be aware of the assigned treatments.
+
+Personnel who analyze the data collected from the study are not aware of the treatment applied to any given group. -->
+
+
+## Study design
+<!-- Describe your study design. Examples include two-group, factorial, randomized block, and repeated measures. Is it a between (unpaired), within-subject (paired), or mixed design? Describe any counterbalancing required. Typical study designs for observation studies include cohort, cross sectional, and case-control studies. -->
+
+A cross-sectional and between-subject design with two conditions.  
+
+## Randomization
+<!-- If you are doing a randomized study, how will you randomize, and at what level? -->
+
+Participants will be randomly assigned to use either the desirable-trait or undesirable-trait scanning strategies while browsing profiles on a dating website of their choice for 10 minutes. 
+
+The order of the outcome measure items will be randomized to control for a potential order effect.
+
+
+
+# Analysis Plan
+<!-- You may describe one or more confirmatory analysis in this section. Remember, all analyses specified in this section must be reported in the final article, and any additional analyses must be clearly labeled as exploratory or hypothesis generating in the final paper. A confirmatory analysis plan must state up front which variables are predictors (independent) and which are the outcomes (dependent), otherwise it is an exploratory analysis.
+
+You may describe exploratory analyses in this section, but a clear confirmatory analysis is required. An exploratory test is any test where a prediction is not made up front, or there are multiple possible tests that you are going to use. A statistically significant finding in an exploratory test is a great way to form a new confirmatory hypothesis, which could be registered at a later time.
+
+To help you keep track of multiple analyses, you may label each for your reference. -->
+
+
+## Statistical models
+<!-- What statistical model(s) will you use to test your hypothesis(ses)? Please include the type of model (e.g. ANOVA, regression, SEM, etc.) as well as the specification of the model (this includes all variables that will be included as predictors, outcomes, or covariates). Refer to the *Hypotheses* section to relate each hypothesis to a statistical analysis. Please specify any interactions that will be tested and remember that any test not included here must be labeled as an exploratory test in your final article. -->
+
+We will first conduct a confirmatory factor analysis to examine the measurement model of the measure we created. We expect a multi-dimensional simple structure with four latent variables of engagement, ease of use, perceived success and partner evaluation forming independent factors with their corresponding items. We will then examine the structural model of the new measure. Specifically, we will test the relationship between regulatory fit indices and outcome by comparing two competing models: Our primary model will be regulatory fit indices (i.e., engagement and ease) predicting regulatory fit outcome (i.e., perceived success), and the alternative model will be both regulatory fit indices and outcome covarying with each other without causal relationships. 
+
+We will then test our regulatory fit hypothesis using structural equation modeling. We will test whether the profile-browsing condition moderates the relationship between regulatory focus and regulatory fit indices, which in turn predicts regulatory fit outcome with two moderated mediation analyses: One with promotion focus as a predictor and one with prevention focus as a predictor (see attached figures for model specifications). 
+
+```{r fig1}
+knitr::include_graphics(here::here("workflow", "plot", "prev_model.png"))
+```
+<br>
+```{r fig2}
+knitr::include_graphics(here::here("workflow", "plot", "prom_model.png"))
+```
+It is possible that engagement and ease serve as regulatory fit outcomes and not as mediators. To test this, we will compare the moderated mediation models against a competing model where the profile-browsing condition only moderates the relationships between regulatory focus and both regulatory fit indices (i.e., engagement and ease) and outcome (i.e., perceived success).   
+
+## Transformations
+<!-- If you plan on transforming, centering, recoding the data, or will require a coding scheme for categorical variables, please describe that process. -->
+
+Prior to analysis, we will mean-center our continuous predictors (i.e., promotion and prevention focus) and effect-code profile-browsing condition variable (“+1” = desirable-trait screening condition & “-1” undesirable-trait screening condition).   
+
+```{r transformation}
+knitr::read_chunk(here::here("workflow","preregistration_files", "transformation.R"))
+```
+
+## Follow-up analyses
+<!-- If not specified previously, will you be conducting any confirmatory analyses to follow up on effects in your statistical model, such as subgroup analyses, pairwise or complex contrasts, or follow-up tests from interactions. Refer to the *Hypotheses* section to relate each hypothesis to a statistical analysis. Remember that any analyses not specified in this research plan must be noted as exploratory. 
+
+Enter your response here. -->
+
+
+## Inference criteria
+<!-- What criteria will you use to make inferences? Please describe the information you'll use (e.g. p-values, Bayes factors, specific model fit indices), as well as cut-off criterion, where appropriate. Will you be using one or two tailed tests for each of your analyses? If you are comparing multiple conditions or testing multiple hypotheses, will you account for this? -->
+
+We will evaluate our measurement and structure models using RMSEA and SRMR. A RMSEA between .05 and .08 will be considered as an acceptable fit (Maccallum, Browne, & Sugawara, 1996). We will compare competing models using AIC to determine the parsimonious model for the regulatory fit hypothesis. 
+
+
+## Data exclusion
+<!-- How will you determine what data or samples, if any, to exclude from your analyses? How will outliers be handled? -->
+
+1. Failed to comply with the experiment instruction   
+  Those who self-report being noncompliant with the instruction for our experimental conditions (e.g., not browsing online dating profiles for the full 10 minutes)  
+2. Missing, erroneous, and overly inconsistent responses  
+  Missing 50%+ responses   
+  Variance in participants’ responses < 0.1  
+3. Failing attention-check tests
+  Fail to correctly answer three attention-check items 
+4. Careless responses  
+  Those who self-report being careless or dishonest in their responses  
+  We will also exclude participants who provide nonsensical responses when asked to list desirable and undesirable traits in an open-ended form.   
+
+```{r exclusion}
+knitr::read_chunk(here::here("data_analysis", "participant_eligibility.R"))
+```
+
+
+## Missing data
+<!-- How will you deal with incomplete or missing data? -->
+
+We will analyze our data with and without outliers and report both sets of results.  
+
+
+## Assumptions (optional)
+<!-- If you are planning on testing the assumptions of the statistical tests included in your analysis plan, which assumptions will you test, how will you test them, what criteria will you use to make decisions based on that test, and what alternative statistical tests will you use? This may be an item where a decision tree could be helpful to plan and communicate the possibilities. -->
+
+<!-- TODO: do this -->
+Prior to analysis...
+
+
+## Exploratory analyses (optional)
+<!-- If you plan to explore your data set to look for unexpected differences or relationships, you may describe those tests here. An exploratory test is any test where a prediction is not made up front, or there are multiple possible tests that you are going to use. A statistically significant finding in an exploratory test is a great way to form a new confirmatory hypothesis, which could be registered at a later time. -->
+
+Enter your response here.
+
+
+## Analysis scripts (optional)
+<!-- The purpose of a fully commented analysis script is to unambiguously provide the responses to all of the questions raised in the analysis section. This step is not common, but we encourage you to try creating an analysis script, refine it using a modeled dataset, and use it in place of your written analysis plan.
+
+Upload an analysis script with clear comments. This optional step is helpful in order to create a process that is completely transparent and increase the likelihood that your analysis can be replicated. We recommend that you run the code on a simulated dataset in order to check that it will run without errors. -->
+
+```{r sem}
+knitr::read_chunk(here::here("workflow", "preregistration_files", "sem.R"))
+```
+
+
+
+# Other
+
+## Other (Optional)
+<!-- If there is any additional information that you feel needs to be included in your preregistration, please enter it here. 
+
+Enter your response here.-->
+
+
+# References
+## 
+\vspace{-2pc}
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{-1in}
+\setlength{\parskip}{8pt}
+\noindent
